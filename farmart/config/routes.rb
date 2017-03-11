@@ -8,5 +8,19 @@ Rails.application.routes.draw do
     resources :orders
   end
 
+  resources :products do
+    member do
+      post "add_order"
+      delete "delete_order"
+    end
+  end
+
+  resources :orders do
+    member do
+      post "add_product"
+      delete "delete_product"
+    end
+  end
   root to: redirect("/vendors")
+
 end
