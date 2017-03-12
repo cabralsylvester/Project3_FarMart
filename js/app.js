@@ -14,17 +14,19 @@ angular
   "$stateProvider",
   RouterFunction
   ])
-  // .factory("FarmartFactory", [
-  //   "$resource",
-  //   FarmartFactoryFunction
-  // ])
+  .factory("FarmartFactory", [
+    "$resource",
+    FarmartFactoryFunction
+  ])
   .controller("FarmartIndexController", [
+    "FarmartFactory",
     FarmartIndexControllerFunction
   ])
-  // .controller("FarmartShowController", [
-  //   "$stateParams",
-  //   FarmartIndexControllerFunction
-  // ])
+  .controller("FarmartShowController", [
+    "FarmartFactory",
+    "$stateParams",
+    FarmartShowControllerFunction
+  ])
 
 
 
@@ -45,14 +47,14 @@ function RouterFunction($stateProvider) {
   })
   }
 
-// function FarmartFactoryFunction($resource){
-//   return $resource()
-// }
-
-function FarmartIndexControllerFunction() {
-  this.vendors = vendor
+function FarmartFactoryFunction($resource){
+  return $resource("http://localhost:3000/vendors")
 }
 
-function FarmartShowControllerFunction($stateParams) {
-  this.vendor = vendor.get({id: $stateParams.id});
+function FarmartIndexControllerFunction(FarmartFactory) {
+  this.vendors = FarmartFactory.query();
+}
+
+function FarmartShowControllerFunction(FarmartFactory, $stateParams) {
+  this.vendor = FarmartFactory.get({id: $stateParams.id});
 }
