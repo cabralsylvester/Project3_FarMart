@@ -48,7 +48,7 @@ function RouterFunction($stateProvider) {
   }
 
 function FarmartFactoryFunction($resource){
-  return $resource("http://localhost:3000/vendors")
+  return $resource("http://localhost:3000/vendors/:id.json")
 }
 
 function FarmartIndexControllerFunction(FarmartFactory) {
