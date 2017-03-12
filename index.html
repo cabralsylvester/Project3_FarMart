@@ -3,15 +3,30 @@
   <head >
     <meta charset="utf-8">
     <title>FarMart</title>
-    <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.2/angular-resource.min.js"></script>
 
+    <link href="https://fonts.googleapis.com/css?family=Sancreek" rel="stylesheet">
 
     <script src="js/app.js"></script>
   </head>
+
   <body>
-        <main data-ui-view>  </main>
+      <main data-ui-view>
+        <div class ="fullscreen-bg">
+          <video loop muted autoplay poster="assets/images/videoframe.png" id="bgvideo">
+            <source src="assets/images/FarMart.mp4">
+          </video>
+        </div>
+        <div class="homebox">
+          <span class="welcome_text">Welcome to</span>
+          <a data-ui-sref="farmartIndex">
+          <img class="logo" src="assets/images/farmart_logo.png">
+          </a>
+        </div>
+      </main>
   </body>
+
 </html>
