@@ -3,3 +3,41 @@
   height: 300px;
   border-radius: 50px;
 }
+
+.fullscreen-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: -100;
+}
+
+.bgvideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.homebox {
+  position: absolute;
+  height: 300px;
+  width: 500px;
+  border-radius: 40%;
+  background: rgba(255, 255, 255, .4);
+  top: 50%;
+  left: 45%;
+  margin: -100px 0 0 -150px;
+  text-align: center;
+  font-size: 3em;
+  line-height: 6em;
+  vertical-align: middle;
+}
+
+a {
+  text-decoration: none;
+
+}
