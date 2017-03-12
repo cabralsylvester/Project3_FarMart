@@ -1,6 +1,6 @@
 
 let vendor = [
-  {name: "Cest la Pommes", city: "Bayville", state: "VA", website: "#" , image: "http://cdn.rosannadavisonnutrition.com/wp-content/uploads/2015/12/apples.jpeg"  }
+  {name: "Cest la Pommes", city: "Bayville", state: "VA", website: "http://www.apple.com/" , image: "http://cdn.rosannadavisonnutrition.com/wp-content/uploads/2015/12/apples.jpeg"  }
 ]
 
 
@@ -17,8 +17,8 @@ angular
 //   "$resource",
 //   FarmartFactoryFunction
 // ])
-.controller("FarmartIndexController", [
-  FarmartIndexControllerFunction
+.controller("FarmartIndexCustomerController", [
+  FarmartIndexCustomerControllerFunction
 ])
 
 
@@ -28,10 +28,10 @@ function RouterFunction($stateProvider) {
     url: "/farmart",
     templateUrl: "js/ng-views/welcome.html"
   })
-  .state("farmartIndex", {
+  .state("farmartIndexCustomer", {
     url: "/farmart/vendors",
-    templateUrl: "js/ng-views/index.html",
-    controller: "FarmartIndexController",
+    templateUrl: "js/ng-views/index-customerpage.html",
+    controller: "FarmartIndexCustomerController",
     controllerAs: "vm"
   })
 }
@@ -40,6 +40,6 @@ function RouterFunction($stateProvider) {
 //   return $resource("#")
 // }
 
-function FarmartIndexControllerFunction() {
+function FarmartIndexCustomerControllerFunction() {
   this.vendors = vendor
 }
