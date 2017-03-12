@@ -24,20 +24,27 @@
 
 .homebox {
   position: absolute;
-  height: 300px;
-  width: 500px;
-  border-radius: 40%;
+  height: 350px;
+  width: 600px;
+  border-radius: 40px;
   background: rgba(255, 255, 255, .4);
   top: 50%;
   left: 45%;
   margin: -100px 0 0 -150px;
   text-align: center;
-  font-size: 3em;
-  line-height: 6em;
+  font-size: 43px;
   vertical-align: middle;
+  background-image: url(../images/wood.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 40px;
+  font-family: 'Sancreek', cursive;
 }
 
 a {
   text-decoration: none;
+}
 
+.logo {
+  height: 260px;
 }
