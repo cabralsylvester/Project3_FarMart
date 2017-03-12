@@ -1,4 +1,10 @@
 class VendorsController < ApplicationController
+
+  include ActionController::MimeResponds
+  include ActionController::Helpers
+  include ActionController::Cookies
+  include ActionController::ImplicitRender
+
   def index
     @vendors = Vendor.all.order(:created_at)
     respond_to do |format|
@@ -12,7 +18,7 @@ class VendorsController < ApplicationController
 
     respond_to do |format|
     format.html {render :show}
-    format.json {render json: @vendor}
+    format.json {render json: @vendor, include: :products}
     end
   end
 
@@ -21,7 +27,7 @@ class VendorsController < ApplicationController
   end
 
   def create
-    @vendor = Vendor.new(Vendor_params)
+    @vendor = Vendor.new(vendor_params)
     respond_to do |format|
 
       if @vendor.save
@@ -35,24 +41,24 @@ class VendorsController < ApplicationController
   end
 
   def edit
-    @Vendor = Vendor.find(params[:id])
+    @vendor = Vendor.find(params[:id])
   end
 
   def update
-    @Vendor = Vendor.find(params[:id])
-    @Vendor.update(Vendor_params)
-    redirect_to @Vendor
+    @vendor = Vendor.find(params[:id])
+    @vendor.update(vendor_params)
+    redirect_to @vendor
   end
 
   def destroy
-    @Vendor = Vendor.find(params[:id])
-    @Vendor.destroy
-    redirect_to Vendors_path
+    @vendor = Vendor.find(params[:id])
+    @vendor.destroy
+    redirect_to vendors_path
   end
 
   private
 
-  def Vendor_params
-    params.require(:Vendor).permit(:authorName, :content, :title, :photoUrl)
+  def vendor_params
+    params.require(:vendor).permit(:name, :city, :state, :website, :image)
   end
 end

@@ -1,0 +1,9 @@
+
+<% @vendors.each do |vendor| %>
+  <div class="vendor">
+    <h2><%= link_to vendor.name, vendor_path(vendor) %></h2>
+    <h3>Location: <%= vendor.city %>,<%= vendor.state %></h3>
+    <p><a href="<%= vendor.website %>"> Link to Vendor Website </a></p>
+    <%= image_tag vendor.image %>
+  </div>
+<% end %>

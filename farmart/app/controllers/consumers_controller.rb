@@ -1,9 +1,15 @@
 class ConsumersController < ApplicationController
+
+  include ActionController::MimeResponds
+  include ActionController::Helpers
+  include ActionController::Cookies
+  include ActionController::ImplicitRender
+
   def index
     @consumers = Consumer.all.order(:created_at)
     respond_to do |format|
       format.html {render :index}
-      format.json {render json: @consumers}
+      format.json {render json: @consumers, include: :orders}
     end
   end
 
@@ -12,7 +18,7 @@ class ConsumersController < ApplicationController
 
     respond_to do |format|
     format.html {render :show}
-    format.json {render json: @consumer}
+    format.json {render json: @consumer, include: :orders}
     end
   end
 
@@ -25,7 +31,7 @@ class ConsumersController < ApplicationController
     respond_to do |format|
 
       if @consumer.save
-          format.html { redirect_to @consumer, notice: "Made the Grumbly" }
+          format.html { redirect_to @consumer, notice: "Made a consumer" }
           format.json { render json: @consumer, status: :created, location: @consumer}
       else
         format.html {render :new }
@@ -53,6 +59,6 @@ class ConsumersController < ApplicationController
   private
 
   def consumer_params
-    params.require(:consumer).permit(:authorName, :content, :title, :photoUrl)
+    params.require(:consumer).permit(:name, :city, :state)
   end
 end

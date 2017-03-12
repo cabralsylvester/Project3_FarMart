@@ -10,57 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310212523) do
+ActiveRecord::Schema.define(version: 20170310212337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "consumers", force: :cascade do |t|
-    t.string   "name"
-    t.string   "city"
-    t.string   "state"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "orders", force: :cascade do |t|
-    t.string   "date"
-    t.string   "time"
-    t.integer  "num_of_products"
-    t.integer  "total_price"
+    t.string   "customer_name"
+    t.string   "contact_num"
+    t.datetime "pick_up_time",   default: '2017-03-12 16:35:41', null: false
+    t.integer  "reserve_amount"
     t.integer  "product_id"
-    t.integer  "consumer_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["consumer_id"], name: "index_orders_on_consumer_id", using: :btree
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.index ["product_id"], name: "index_orders_on_product_id", using: :btree
   end
 
   create_table "products", force: :cascade do |t|
-    t.string   "type"
+    t.string   "category"
     t.string   "name"
-    t.integer  "quantity"
-    t.string   "measurement"
+    t.integer  "amount"
+    t.string   "unit_of_measure"
     t.string   "image"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "vendor_id"
-    t.integer  "order_id"
-    t.index ["order_id"], name: "index_products_on_order_id", using: :btree
     t.index ["vendor_id"], name: "index_products_on_vendor_id", using: :btree
   end
 
   create_table "vendors", force: :cascade do |t|
-    t.string "name"
-    t.string "city"
-    t.string "state"
-    t.string "website"
-    t.string "image"
+    t.string   "name"
+    t.string   "city"
+    t.string   "state"
+    t.string   "website"
+    t.string   "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "orders", "consumers"
   add_foreign_key "orders", "products"
-  add_foreign_key "products", "orders"
   add_foreign_key "products", "vendors"
 end

@@ -6,7 +6,7 @@ class CreateVendors < ActiveRecord::Migration[5.0]
       t.string :state
       t.string :website
       t.string :image
-      t.timestamp
+      t.timestamps null: false
     end
   end
 end
