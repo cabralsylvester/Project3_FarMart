@@ -13,43 +13,27 @@ angular
   "$stateProvider",
   RouterFunction
   ])
-// .factory("FarmartFactory", [
-//   "$resource",
-//   FarmartFactoryFunction
-// ])
-  .controller("FarmartIndexCustomerController", [
-    FarmartIndexCustomerControllerFunction
-  ])
-  
 
+  .controller("FarmartIndexController", [
+    FarmartIndexControllerFunction
+  ])
 
 
 function RouterFunction($stateProvider) {
   $stateProvider
-  .state("welcome", {
+  .state("farmartIndex", {
     url: "/farmart",
-    templateUrl: "js/ng-views/welcome.html"
-  })
-  .state("farmartIndexCustomer", {
-    url: "/farmart/vendors",
-    templateUrl: "js/ng-views/index-customerpage.html",
-    controller: "FarmartIndexCustomerController",
+    templateUrl: "js/ng-views/index.html",
+    controller: "FarmartIndexController",
     controllerAs: "vm"
   })
-  .state("farmartIndexCustomer", {
-    url: "/farmart/vendors",
-    templateUrl: "js/ng-views/index-customerpage.html",
-    controller: "FarmartIndexCustomerController",
-    controllerAs: "vm"
-  })
-
-}
+  }
 
 
-// function FarmartFactoryFunction($resource) {
-//   return $resource("#")
+// function FarmartFactoryFunction($resource){
+//   return $resource()
 // }
 
-function FarmartIndexCustomerControllerFunction() {
+function FarmartIndexControllerFunction() {
   this.vendors = vendor
 }
