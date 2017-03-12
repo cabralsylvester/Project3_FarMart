@@ -4,7 +4,7 @@ let vendor = [
   {name: "Cest la Apples", city: "Bayville", state: "VA", website: "http://www.apple.com/" , image: "http://cdn.rosannadavisonnutrition.com/wp-content/uploads/2015/12/apples.jpeg"  }
 ]
 
- // need to add FarmartFactoryController once RAILS API is ready
+
 angular
   .module("farmart", [
     "ui.router",
@@ -14,13 +14,17 @@ angular
   "$stateProvider",
   RouterFunction
   ])
+  // .factory("FarmartFactory", [
+  //   "$resource",
+  //   FarmartFactoryFunction
+  // ])
   .controller("FarmartIndexController", [
     FarmartIndexControllerFunction
   ])
-  .controller("FarmartShowController", [
-    "$stateParams",
-    FarmartIndexControllerFunction
-  ])
+  // .controller("FarmartShowController", [
+  //   "$stateParams",
+  //   FarmartIndexControllerFunction
+  // ])
 
 
 
