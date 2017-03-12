@@ -7,6 +7,7 @@
 
 
 <h2><a href="/vendors/<%= @vendor.id %>/products/<%= @product.id %>/orders"> Reservation List </a></h2>
+<h3><%= link_to "Place Reservation", new_vendor_product_order_path(@vendor, @product) %> </h3>
 <% @orders.each do |order| %>
 <h3> Customer: <%= order.customer_name %> </h3>
 <p> Contact #: <%= order.contact_num %> </h3>

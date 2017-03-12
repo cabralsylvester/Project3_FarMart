@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save!
-        format.html { redirect_to @product, notice: "Order was created." }
+        format.html { redirect_to "/vendors/#{@vendor.id}/products/#{@product.id}", notice: "Order was created." }
         format.json { render json: @order, status: :created }
       else
         format.html { render :new }
@@ -58,8 +58,8 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.update!(order_params)
-        format.html { redirect_to @product }
-        format.json { render json: @product, include: :orders }
+        format.html { redirect_to "/vendors/#{@vendor.id}/products/#{@product.id}"}
+        format.json { render json: @order, include: :orders }
       else
         format.html { render :new}
         format.json { render json: @order.errors, status: :unprocessable_entity}
@@ -70,10 +70,10 @@ class OrdersController < ApplicationController
 
   def destroy
     @vendor = Vendor.find(params[:vendor_id])
-    @product = product.find(params[:product_id])
+    @product = Product.find(params[:product_id])
     @order = Order.find(params[:id])
     @order.destroy
-    redirect_to @product
+    redirect_to "/vendors/#{@vendor.id}/products/#{@product.id}"
   end
 
   def add_to_order
