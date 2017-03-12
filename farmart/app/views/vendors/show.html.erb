@@ -1,0 +1,27 @@
+<%= link_to "View All Vendors", vendors_path %>
+
+<div class="vendor">
+  <h2><%= @vendor.name %></h2>
+  <h3>Location: <%= @vendor.city %>, <%= @vendor.state %></h3>
+  <p><a href="<%= @vendor.website %>"> Link to Vendor Website </a></p>
+  <%= image_tag @vendor.image %>
+
+  <%= link_to "Edit Vendor", edit_vendor_path(@vendor) %>
+  <%= link_to "Delete Vendor", vendor_path(@vendor), method: :delete %>
+</div>
+
+<h2>Products</h2>
+
+<%= link_to "Add product", new_vendor_product_path(@vendor) %>
+
+<% @vendor.products.each do |product| %>
+  <div class="product">
+    <h4><a href='/vendors/<%= @vendor.id %>/products/<%= product.id %>'><%= product.category %>: <%= product.name %></a></h4>
+    <!-- <h4> <%# product.amount %> <%# product.unit_of_measure %></h4>
+    <p> <%# product.description %></p>
+    <p> <%# product.image %></p>
+    <%# link_to "Edit product", edit_vendor_product_path(@vendor, product) %>
+    <%# link_to "Delete product", vendor_product_path(@vendor, product), method: :delete %> -->
+    <hr>
+  </div>
+<% end %>

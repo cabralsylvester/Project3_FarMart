@@ -1,0 +1,17 @@
+<h4><a href='/vendors/<%= @vendor.id %>/products/<%= @product.id %>'><%= @product.category %>: <%= @product.name %></a></h4>
+<h4> <%= @product.amount %> <%= @product.unit_of_measure %></h4>
+<p> <%= @product.description %></p>
+<p> <%= @product.image %></p>
+<%= link_to "Edit product", edit_vendor_product_path(@vendor, @product) %>
+<%= link_to "Delete product", vendor_product_path(@vendor, @product), method: :delete %>
+
+
+<h2><a href="/vendors/<%= @vendor.id %>/products/<%= @product.id %>/orders"> Reservation List </a></h2>
+<% @orders.each do |order| %>
+<h3> Customer: <%= order.customer_name %> </h3>
+<p> Contact #: <%= order.contact_num %> </h3>
+<p>Pick Up Time:  <%= order.pick_up_time %> </p>
+<p> Amount Reserved:  <%= order.reserve_amount %></p>
+<%= link_to "Edit Order", edit_vendor_product_order_path(@vendor, @product, order) %>
+<%= link_to "Delete Order", vendor_product_order_path(@vendor, @product, order), method: :delete %>
+<% end %>
