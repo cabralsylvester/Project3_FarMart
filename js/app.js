@@ -9,17 +9,19 @@ angular
     "ui.router",
     "ngResource"
   ])
-.config([
+  .config([
   "$stateProvider",
   RouterFunction
-])
+  ])
 // .factory("FarmartFactory", [
 //   "$resource",
 //   FarmartFactoryFunction
 // ])
-.controller("FarmartIndexCustomerController", [
-  FarmartIndexCustomerControllerFunction
-])
+  .controller("FarmartIndexCustomerController", [
+    FarmartIndexCustomerControllerFunction
+  ])
+  
+
 
 
 function RouterFunction($stateProvider) {
@@ -34,7 +36,15 @@ function RouterFunction($stateProvider) {
     controller: "FarmartIndexCustomerController",
     controllerAs: "vm"
   })
+  .state("farmartIndexCustomer", {
+    url: "/farmart/vendors",
+    templateUrl: "js/ng-views/index-customerpage.html",
+    controller: "FarmartIndexCustomerController",
+    controllerAs: "vm"
+  })
+
 }
+
 
 // function FarmartFactoryFunction($resource) {
 //   return $resource("#")
