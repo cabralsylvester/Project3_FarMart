@@ -1,3 +1,13 @@
+<article>
+  <h3> {{vm.vendor.name}} </h3>
+  <p> {{vm.vendor.city}} , {{vm.vendor.state}} </p>
+  <p> {{vm.vendor.website}} </p>
+  <p> <img ng-src={{vm.vendor.image}}> </p>
+</article>
+<button type="submit" ng-click="vm.delete(vendor)">Delete</button>
+
+
+
 <h1>Products of {{vm.vendor.name}} </h1>
 
 <div data-ng-repeat="product in vm.products">

@@ -78,6 +78,24 @@ function FarmartShowControllerFunction(FarmartFactory, $stateParams) {
   console.log(this.products)
 }
 
-// function ProductsIndexControllerFunction(FarmartFactory,$stateParams) {
-// this.products = FarmartFactory.products.query({vendor_id: $stateParams.id})
-// }
+
+
+
+
+
+// eric create &edit vendor
+function FarmartIndexControllerFunction( FarmartFactory ) {
+  this.vendors = FarmartFactory.query();
+  this.newVendor = new FarmartFactory()
+  this.create = function() {
+    this.newVendor.$save(this.newVendor).then( () =>
+    this.newVendor = {} )
+  }
+}
+function FarmartShowControllerFunction(FarmartFactory, $stateParams) {
+  this.vendor = FarmartFactory.get({id: $stateParams.id});
+  this.delete = function(vendor){
+    this.vendor.$remove(vendor)
+    console.log("clicked")
+  }
+}
