@@ -27,24 +27,32 @@ angular
     "$stateParams",
     FarmartShowControllerFunction
   ])
-
-
+  // .controller("ProductsIndexController", [
+  //   "FarmartFactory",
+  //   ProductsIndexControllerFunction
+  // ])
 
 
 function RouterFunction($stateProvider) {
   $stateProvider
   .state("farmartIndex", {
-    url: "/farmart/index",
+    url: "/farmart",
     templateUrl: "js/ng-views/index.html",
     controller: "FarmartIndexController",
     controllerAs: "vm"
   })
   .state("farmartShow", {
-    url: "/farmart/:id",
+    url: "/farmart/vendors/:id/products",
     templateUrl: "js/ng-views/show.html",
     controller: "FarmartShowController",
     controllerAs: "vm"
   })
+  // .state("productsIndex", {
+  //   url: "/farmart/vendors/:id/products",
+  //   templateUrl: "js/ng-views/products-index.html",
+  //   controller: "ProductsIndexController",
+  //   controllerAs: "vm"
+  // })
   }
 
 function FarmartFactoryFunction($resource){
@@ -53,7 +61,7 @@ function FarmartFactoryFunction($resource){
       query: {method: "GET", params: {}, isArray: true },
       get: {method: "GET", params: {}, isArray: false}
     }),
-    products: $resource("http://localhost:3000/vendors/:vendor_id/products/:id.json", {}, {
+    products: $resource("http://localhost:3000/vendors/:vendor_id/products.json", {}, {
       query: {method: "GET", params: {}, isArray: true},
       get: {method: "GET", params: {}, isArray: false}
     })
@@ -65,8 +73,11 @@ function FarmartIndexControllerFunction(FarmartFactory) {
 }
 
 function FarmartShowControllerFunction(FarmartFactory, $stateParams) {
-  this.vendor = FarmartFactory.get({id: $stateParams.id});
+  this.vendor = FarmartFactory.vendors.get({id: $stateParams.id})
+  this.products = FarmartFactory.products.query({vendor_id: $stateParams.id});
+  console.log(this.products)
 }
 
-// ProductsIndexControllerFunction
-// this.products = FarmartFactory.products.query({vendor_id: $stateParams.id,})
+// function ProductsIndexControllerFunction(FarmartFactory,$stateParams) {
+// this.products = FarmartFactory.products.query({vendor_id: $stateParams.id})
+// }
