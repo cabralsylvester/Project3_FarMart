@@ -9,7 +9,7 @@ class VendorsController < ApplicationController
     @vendors = Vendor.all.order(:created_at)
     respond_to do |format|
       format.html {render :index}
-      format.json {render json: @vendors}
+      format.json {render json: @vendors, include: :products}
     end
   end
 

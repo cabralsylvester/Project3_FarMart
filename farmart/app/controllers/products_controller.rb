@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       format.html { render :index}
-      format.json {render json: @products }
+      format.json {render json: @products, include: :orders }
     end
   end
 
