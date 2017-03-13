@@ -18,14 +18,14 @@ angular
     "$resource",
     FarmartFactoryFunction
   ])
-  .controller("FarmartIndexController", [
+  .controller("VendorIndexController", [
     "FarmartFactory",
-    FarmartIndexControllerFunction
+    VendorIndexControllerFunction
   ])
-  .controller("FarmartShowController", [
+  .controller("VendorShowController", [
     "FarmartFactory",
     "$stateParams",
-    FarmartShowControllerFunction
+    VendorShowControllerFunction
   ])
   // .controller("ProductsIndexController", [
   //   "FarmartFactory",
@@ -35,16 +35,16 @@ angular
 
 function RouterFunction($stateProvider) {
   $stateProvider
-  .state("farmartIndex", {
-    url: "/farmart",
+  .state("vendorIndex", {
+    url: "/vendors",
     templateUrl: "js/ng-views/index.html",
-    controller: "FarmartIndexController",
+    controller: "VendorIndexController",
     controllerAs: "vm"
   })
-  .state("farmartShow", {
-    url: "/farmart/vendors/:id/products",
+  .state("vendorShow", {
+    url: "/vendors/:id",
     templateUrl: "js/ng-views/show.html",
-    controller: "FarmartShowController",
+    controller: "VendorShowController",
     controllerAs: "vm"
   })
   // .state("productsIndex", {
@@ -68,12 +68,11 @@ function FarmartFactoryFunction($resource, $stateParams){
   }
 }
 
-function FarmartIndexControllerFunction(FarmartFactory) {
+function VendorIndexControllerFunction(FarmartFactory) {
   this.vendors = FarmartFactory.vendors.query();
 }
 
-function FarmartShowControllerFunction(FarmartFactory, $stateParams) {
-
+function VendorShowControllerFunction(FarmartFactory, $stateParams) {
   this.vendor = FarmartFactory.vendors.get({id: $stateParams.id})
   this.products = FarmartFactory.products.query({vendor_id: $stateParams.id});
   console.log(this.products)
@@ -84,19 +83,19 @@ function FarmartShowControllerFunction(FarmartFactory, $stateParams) {
 
 
 
-// eric create &edit vendor
-function FarmartIndexControllerFunction( FarmartFactory ) {
-  this.vendors = FarmartFactory.query();
-  this.newVendor = new FarmartFactory()
-  this.create = function() {
-    this.newVendor.$save(this.newVendor).then( () =>
-    this.newVendor = {} )
-  }
-}
-function FarmartShowControllerFunction(FarmartFactory, $stateParams) {
-  this.vendor = FarmartFactory.get({id: $stateParams.id});
-  this.delete = function(vendor){
-    this.vendor.$remove(vendor)
-    console.log("clicked")
-  }
-}
+// // eric create &edit vendor
+// function FarmartIndexControllerFunction( FarmartFactory ) {
+//   this.vendors = FarmartFactory.query();
+//   this.newVendor = new FarmartFactory()
+//   this.create = function() {
+//     this.newVendor.$save(this.newVendor).then( () =>
+//     this.newVendor = {} )
+//   }
+// }
+// function FarmartShowControllerFunction(FarmartFactory, $stateParams) {
+//   this.vendor = FarmartFactory.get({id: $stateParams.id});
+//   this.delete = function(vendor){
+//     this.vendor.$remove(vendor)
+//     console.log("clicked")
+//   }
+// }
