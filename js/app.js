@@ -34,7 +34,7 @@ angular
 function RouterFunction($stateProvider) {
   $stateProvider
   .state("farmartIndex", {
-    url: "/farmart/index",
+    url: "/farmart",
     templateUrl: "js/ng-views/index.html",
     controller: "FarmartIndexController",
     controllerAs: "vm"
@@ -47,7 +47,7 @@ function RouterFunction($stateProvider) {
   })
   }
 
-function FarmartFactoryFunction($resource){
+function FarmartFactoryFunction($resource, $stateParams){
   return {
     vendors: $resource("http://localhost:3000/vendors/:id.json", {}, {
       query: {method: "GET", params: {}, isArray: true },
@@ -65,7 +65,7 @@ function FarmartIndexControllerFunction(FarmartFactory) {
 }
 
 function FarmartShowControllerFunction(FarmartFactory, $stateParams) {
-  this.vendor = FarmartFactory.get({id: $stateParams.id});
+  this.vendor = FarmartFactory.vendors.get({id: $stateParams.id});
 }
 
 // ProductsIndexControllerFunction
