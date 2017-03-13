@@ -27,8 +27,10 @@ angular
     "$stateParams",
     FarmartShowControllerFunction
   ])
-
-
+  // .controller("ProductsIndexController", [
+  //   "FarmartFactory",
+  //   ProductsIndexControllerFunction
+  // ])
 
 
 function RouterFunction($stateProvider) {
@@ -40,11 +42,17 @@ function RouterFunction($stateProvider) {
     controllerAs: "vm"
   })
   .state("farmartShow", {
-    url: "/farmart/:id",
+    url: "/farmart/vendors/:id/products",
     templateUrl: "js/ng-views/show.html",
     controller: "FarmartShowController",
     controllerAs: "vm"
   })
+  // .state("productsIndex", {
+  //   url: "/farmart/vendors/:id/products",
+  //   templateUrl: "js/ng-views/products-index.html",
+  //   controller: "ProductsIndexController",
+  //   controllerAs: "vm"
+  // })
   }
 
 function FarmartFactoryFunction($resource, $stateParams){
@@ -53,7 +61,7 @@ function FarmartFactoryFunction($resource, $stateParams){
       query: {method: "GET", params: {}, isArray: true },
       get: {method: "GET", params: {}, isArray: false}
     }),
-    products: $resource("http://localhost:3000/vendors/:vendor_id/products/:id.json", {}, {
+    products: $resource("http://localhost:3000/vendors/:vendor_id/products.json", {}, {
       query: {method: "GET", params: {}, isArray: true},
       get: {method: "GET", params: {}, isArray: false}
     })
@@ -65,8 +73,30 @@ function FarmartIndexControllerFunction(FarmartFactory) {
 }
 
 function FarmartShowControllerFunction(FarmartFactory, $stateParams) {
-  this.vendor = FarmartFactory.vendors.get({id: $stateParams.id});
+
+  this.vendor = FarmartFactory.vendors.get({id: $stateParams.id})
+  this.products = FarmartFactory.products.query({vendor_id: $stateParams.id});
+  console.log(this.products)
 }
 
-// ProductsIndexControllerFunction
-// this.products = FarmartFactory.products.query({vendor_id: $stateParams.id,})
+
+
+
+
+
+// eric create &edit vendor
+function FarmartIndexControllerFunction( FarmartFactory ) {
+  this.vendors = FarmartFactory.query();
+  this.newVendor = new FarmartFactory()
+  this.create = function() {
+    this.newVendor.$save(this.newVendor).then( () =>
+    this.newVendor = {} )
+  }
+}
+function FarmartShowControllerFunction(FarmartFactory, $stateParams) {
+  this.vendor = FarmartFactory.get({id: $stateParams.id});
+  this.delete = function(vendor){
+    this.vendor.$remove(vendor)
+    console.log("clicked")
+  }
+}
