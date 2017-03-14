@@ -21,6 +21,21 @@
 
 <h1>Products of {{vm.vendor.name}} </h1>
 
+<hr>
+<button class="add_product" ng-click="createP = !createP">Add a Product</button>
+  <div class="new_form">
+    <form class="adding" ng-show="createP" ng-submit="vm.create(newProduct)">
+      <input placeholder="Category" ng-model="vm.newProduct.category">
+      <input placeholder="Product Name" ng-model="vm.newProduct.name">
+      <input placeholder="Amount" ng-model="vm.newProduct.amount">
+      <input placeholder="Unit of Measurement" ng-model="vm.newProduct.unit_of_measure">
+      <input placeholder="Image" ng-model="vm.newProduct.image">
+      <input placeholder="description" ng-model="vm.newProduct.description">
+        <button type="submit">Produce</button>
+    </form>
+  </div>
+<hr>
+
 <div data-ng-repeat="product in vm.products">
   <h3>Name: {{product.name}}</h3>
   <h4>Category: {{product.category}}</h4>
