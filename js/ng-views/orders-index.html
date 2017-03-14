@@ -1,0 +1,18 @@
+<!-- <div data-ng-repeat="orders in vm.orders ">
+  <div class="order">
+      <h3> <a data-ui-sref="orderShow({id: order.id})"> {{order.name}} </a></h3>
+      <h4> {{vendor.state}}, {{vendor.city}} </h4>
+      <img data-ng-src="{{vendor.image}}" />
+  </div>
+</div> -->
+
+
+<h2>these are all the orders</h2>
+
+
+
+  <div data-ng-repeat="order in vm.orders ">
+    <div>
+        <h3>{{order.customer_name}}</h3>
+    </div>
+  </div>
