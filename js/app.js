@@ -19,7 +19,7 @@ angular
   ])
   .controller("VendorIndexController", [
     "FarmartFactory",
-    "$state",
+    "$location",
     VendorIndexControllerFunction
   ])
   .controller("VendorShowController", [
@@ -33,6 +33,8 @@ angular
      "$stateParams",
      OrdersIndexControllerFunction
    ])
+
+
 
 
 function RouterFunction($stateProvider) {
@@ -83,12 +85,12 @@ function FarmartFactoryFunction($resource, $stateParams){
   }
 }
 
-function VendorIndexControllerFunction(FarmartFactory, $state) {
+function VendorIndexControllerFunction(FarmartFactory, $stateParams, $window) {
   this.vendors = FarmartFactory.vendors.query();
   this.newVendor = new FarmartFactory.vendors
   this.create = function() {
       this.newVendor.$save(this.newVendor).then( () =>
-      this.newVendor = {}, $state.go("vendorIndex") )
+      this.newVendor = {}, $window.location.pathname(vendorIndex) )
       }
 }
 
