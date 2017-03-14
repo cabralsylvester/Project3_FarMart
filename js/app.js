@@ -65,17 +65,17 @@ function RouterFunction($stateProvider) {
 
 function FarmartFactoryFunction($resource, $stateParams){
   return {
-    vendors: $resource("http://localhost:3000/vendors/:id.json", {id: "@id"}, {
+    vendors: $resource( "http://localhost:3000/vendors/:id.json", {id: "@id"}, {
       query: {method: "GET", params: {}, isArray: true },
       create: {method: "POST"},
       get: {method: "GET", params: {id: "@id"}, isArray: false},
       update: {method: "PUT", params: {id: "@id"}, isArray: false},
       remove: {method: "DELETE", params: {id: "@id"}}
     }),
-    products: $resource("http://localhost:3000/vendors/:vendor_id/products/:id.json", {vendor_id: "@id", id: "@id"}, {
+    products: $resource( "http://localhost:3000/vendors/:vendor_id/products/:id.json", {vendor_id:"@id", id: "@id"}, {
       query: {method: "GET", params: {}, isArray: true},
       get: {method: "GET", params: {}, isArray: false},
-      create: {method: "POST", params: {vendor_id: "@id", id:"@id"}}
+      create: {method: "POST", params: {vendor_id: "@id"}}
     }),
     orders: $resource("http://localhost:3000/vendors/:vendor_id/products/:product_id/orders.json", {vendor_id: "@id", product_id: "@id"}, {
       query: {method: "GET", params: {vendor_id: "@id", product_id: "@id"}, isArray: true},
@@ -105,13 +105,23 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
     )
   }
 
-// `delete vendor functionality
+// delete vendor functionality
   this.vendor.remove = function(vendor){
     this.vendor.$remove({id: $stateParams.id}).then(
      function(vendor) {
     $state.go("vendorIndex")
     })
   }
+
+// add product functionality
+  this.newProduct = new FarmartFactory.products
+  this.create = function() {
+    this.newProduct.$save({vendor_id: $stateParams.id}).then( () =>
+    this.newProduct = {})
+  }
+
+// delete product functionality
+  // this.product.remove=
 }
 
 function OrdersIndexControllerFunction(FarmartFactory, $stateParams) {
