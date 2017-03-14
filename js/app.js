@@ -19,13 +19,19 @@ angular
   ])
   .controller("VendorIndexController", [
     "FarmartFactory",
-    "$location",
+    "$stateParams",
     VendorIndexControllerFunction
+  ])
+  .controller("VendorNewController", [
+    "FarmartFactory",
+    "$state",
+    VendorNewControllerFunction
   ])
   .controller("VendorShowController", [
     "FarmartFactory",
     "$stateParams",
     "$state",
+    "$window",
     VendorShowControllerFunction
   ])
   .controller("OrdersIndexController", [
@@ -43,6 +49,12 @@ function RouterFunction($stateProvider) {
     url: "/vendors",
     templateUrl: "js/ng-views/index.html",
     controller: "VendorIndexController",
+    controllerAs: "vm"
+  })
+  .state("vendorNew", {
+    url: "/vendors/new",
+    templateUrl: "js/ng-views/new.html",
+    controller: "VendorNewController",
     controllerAs: "vm"
   })
   .state("vendorShow", {
@@ -85,16 +97,20 @@ function FarmartFactoryFunction($resource, $stateParams){
   }
 }
 
-function VendorIndexControllerFunction(FarmartFactory, $stateParams, $window) {
+function VendorIndexControllerFunction(FarmartFactory, $stateParams) {
   this.vendors = FarmartFactory.vendors.query();
-  this.newVendor = new FarmartFactory.vendors
-  this.create = function() {
-      this.newVendor.$save(this.newVendor).then( () =>
-      this.newVendor = {}, $window.location.pathname(vendorIndex) )
-      }
 }
 
-function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
+function VendorNewControllerFunction(FarmartFactory, $state) {
+  this.vendor = new FarmartFactory.vendors
+  this.create = function() {
+      this.vendor.$save(function(vendor){
+        $state.go("vendorShow", {id: vendor.id})
+      })
+    }
+}
+
+function VendorShowControllerFunction(FarmartFactory, $stateParams, $state, $window) {
   this.vendor = FarmartFactory.vendors.get({id: $stateParams.id})
   this.products = FarmartFactory.products.query({vendor_id: $stateParams.id});
   console.log(this.products)
@@ -110,7 +126,7 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
   this.vendor.remove = function(vendor){
     this.vendor.$remove({id: $stateParams.id}).then(
      function(vendor) {
-    $state.go("vendorIndex")
+    $window.go("vendorIndex")
     })
   }
 }
