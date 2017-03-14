@@ -1,5 +1,8 @@
-<h2>Orders for (product's name)</h2>
+<h2>Orders for {{vm.product.name}} of {{vm.vendor.name}}</h2>
+<button type="submit" ng-click="vm.product.$remove({vendor_id: vm.vendor.id, product_id:vm.product.id})">Delete Product</button>
+
   <div data-ng-repeat="order in vm.orders">
+
     <div>
         <h3 class="capitalize">Customer Name: {{order.customer_name}}</h3>
         <h3>Phone: {{order.contact_num}}</h3>
