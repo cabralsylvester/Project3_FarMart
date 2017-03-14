@@ -75,7 +75,7 @@ function FarmartFactoryFunction($resource, $stateParams){
     products: $resource( "http://localhost:3000/vendors/:vendor_id/products/:id.json", {vendor_id:"@id", id: "@id"}, {
       query: {method: "GET", params: {}, isArray: true},
       get: {method: "GET", params: {}, isArray: false},
-      create: {method: "POST", params: {vendor_id: "@id", id: "@id"}}
+      create: {method: "POST", params: {vendor_id: "@id"}}
     }),
     orders: $resource("http://localhost:3000/vendors/:vendor_id/products/:product_id/orders.json", {vendor_id: "@id", product_id: "@id"}, {
       query: {method: "GET", params: {vendor_id: "@id", product_id: "@id"}, isArray: true},
@@ -114,14 +114,14 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
   }
 
 // add product functionality
-  this.vendor.newProduct = new FarmartFactory.products
+  this.newProduct = new FarmartFactory.products
   this.create = function() {
-    this.newProduct.$save().then( () =>
+    this.newProduct.$save({vendor_id: $stateParams.id}).then( () =>
     this.newProduct = {})
   }
 
 // delete product functionality
-
+  // this.product.remove=
 }
 
 
