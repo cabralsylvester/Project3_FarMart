@@ -22,7 +22,7 @@
 <h1>Products of {{vm.vendor.name}} </h1>
 
 <div data-ng-repeat="product in vm.products">
-  <h3>Name: {{product.name}}</h3>
+  <h3>Name: <a data-ui-sref="ordersIndex({id: product.id})">{{product.name}} </a></h3>
   <h4>Category: {{product.category}}</h4>
   <h4>Amount: {{product.amount}} {{product.unit_of_measure}}</h4>
   <h4>Description: {{product.description}}</h4>

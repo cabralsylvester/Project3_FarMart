@@ -50,7 +50,7 @@ function RouterFunction($stateProvider) {
     controllerAs: "vm"
   })
   .state("ordersIndex", {
-    url: "/vendors/:vendor_id/products/:product_id/orders",
+    url: "/vendors/:vendor_id/products/:id/orders",
     templateUrl: "js/ng-views/orders-index.html",
     controller: "OrdersIndexController",
     controllerAs: "vm"
@@ -116,7 +116,7 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
 
 function OrdersIndexControllerFunction(FarmartFactory, $stateParams) {
   // this.vendor = FarmartFactory.vendors.get({id: $stateParams.id})
-  this.products = FarmartFactory.products.query({vendor_id: $stateParams.vendor_id})
+  this.products = FarmartFactory.products.get({vendor_id: $stateParams.vendor_id})
   this.orders = FarmartFactory.orders.query({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id});
 
 }
