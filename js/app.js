@@ -19,8 +19,13 @@ angular
   ])
   .controller("VendorIndexController", [
     "FarmartFactory",
-    "$state",
+    "$stateParams",
     VendorIndexControllerFunction
+  ])
+  .controller("VendorNewController", [
+    "FarmartFactory",
+    "$state",
+    VendorNewControllerFunction
   ])
   .controller("VendorShowController", [
     "FarmartFactory",
@@ -35,12 +40,20 @@ angular
    ])
 
 
+
+
 function RouterFunction($stateProvider) {
   $stateProvider
   .state("vendorIndex", {
     url: "/vendors",
     templateUrl: "js/ng-views/index.html",
     controller: "VendorIndexController",
+    controllerAs: "vm"
+  })
+  .state("vendorNew", {
+    url: "/vendors/new",
+    templateUrl: "js/ng-views/new.html",
+    controller: "VendorNewController",
     controllerAs: "vm"
   })
   .state("vendorShow", {
@@ -84,13 +97,17 @@ function FarmartFactoryFunction($resource, $stateParams){
   }
 }
 
-function VendorIndexControllerFunction(FarmartFactory, $state) {
+function VendorIndexControllerFunction(FarmartFactory, $stateParams) {
   this.vendors = FarmartFactory.vendors.query();
-  this.newVendor = new FarmartFactory.vendors
+}
+
+function VendorNewControllerFunction(FarmartFactory, $state) {
+  this.vendor = new FarmartFactory.vendors
   this.create = function() {
-      this.newVendor.$save(this.newVendor).then( () =>
-      this.newVendor = {}, $state.go("vendorIndex") )
-      }
+      this.vendor.$save(function(vendor){
+        $state.go("vendorShow", {id: vendor.id})
+      })
+    }
 }
 
 function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
@@ -107,10 +124,10 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
 
 // delete vendor functionality
   this.vendor.remove = function(vendor){
-    this.vendor.$remove({id: $stateParams.id}).then(
-     function(vendor) {
-    $state.go("vendorIndex")
+    this.vendor.$remove({id: $stateParams.id}, function () {
+      $state.go("vendorIndex")
     })
+  
   }
 
 // add product functionality
