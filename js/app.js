@@ -72,10 +72,11 @@ function FarmartFactoryFunction($resource, $stateParams){
       update: {method: "PUT", params: {id: "@id"}, isArray: false},
       remove: {method: "DELETE", params: {id: "@id"}}
     }),
-    products: $resource( "http://localhost:3000/vendors/:vendor_id/products/:id.json", {vendor_id:"@id", id: "@id"}, {
+    products: $resource( "http://localhost:3000/vendors/:vendor_id/products/:product_id.json", {vendor_id:"@id", product_id: "@id"}, {
       query: {method: "GET", params: {}, isArray: true},
-      get: {method: "GET", params: {}, isArray: false},
-      create: {method: "POST", params: {vendor_id: "@id"}}
+      get: {method: "GET", params: {vendor_id: "@id", product_id: "@id"}, isArray: false},
+      create: {method: "POST", params: {vendor_id: "@id"}},
+      remove: {method: "DELETE", params: {vendor_id: "@id", product_id: "@id"}}
     }),
     orders: $resource("http://localhost:3000/vendors/:vendor_id/products/:product_id/orders.json", {vendor_id: "@id", product_id: "@id"}, {
       query: {method: "GET", params: {vendor_id: "@id", product_id: "@id"}, isArray: true},
@@ -86,6 +87,8 @@ function FarmartFactoryFunction($resource, $stateParams){
 
 function VendorIndexControllerFunction(FarmartFactory, $state) {
   this.vendors = FarmartFactory.vendors.query();
+
+  // create new vendor
   this.newVendor = new FarmartFactory.vendors
   this.create = function() {
       this.newVendor.$save(this.newVendor).then( () =>
@@ -96,7 +99,6 @@ function VendorIndexControllerFunction(FarmartFactory, $state) {
 function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
   this.vendor = FarmartFactory.vendors.get({id: $stateParams.id})
   this.products = FarmartFactory.products.query({vendor_id: $stateParams.id});
-  console.log(this.products)
 
   //edit vendor functionality
   this.update = function(vendor){
@@ -120,14 +122,21 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
     this.newProduct = {})
   }
 
-// delete product functionality
-  // this.product.remove=
 }
 
 
 function OrdersIndexControllerFunction(FarmartFactory, $stateParams) {
   this.vendor = FarmartFactory.vendors.get({id: $stateParams.vendor_id})
-  this.products = FarmartFactory.products.query({vendor_id: $stateParams.vendor_id})
+  // this.products = FarmartFactory.products.query({vendor_id: $stateParams.vendor_id})
+  this.product = FarmartFactory.products.get({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id})
   this.orders = FarmartFactory.orders.query({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id});
+
+  // delete product functionality
+    this.product.remove = function(vendor, product){
+      this.product.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id}).then(
+        function(){
+          $state.go("vendorIndex")
+        })
+    }
 
 }

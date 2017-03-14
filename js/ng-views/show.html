@@ -4,7 +4,6 @@
   <p> {{vm.vendor.website}} </p>
   <p> <img ng-src={{vm.vendor.image}}> </p>
 </article>
-<button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)">Delete</button>
 
 
 <button class="edit_vendor" ng-click="edit = !edit">Edit This Vendor</button>
@@ -17,6 +16,7 @@
       <input placeholder="Image" ng-model="vm.vendor.image">
         <button type="submit" >Update</button>
     </form>
+    <button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)">Delete</button>
   </div>
 
 <h1>Products of {{vm.vendor.name}} </h1>
@@ -30,14 +30,14 @@
       <input placeholder="Amount" ng-model="vm.newProduct.amount">
       <input placeholder="Unit of Measurement" ng-model="vm.newProduct.unit_of_measure">
       <input placeholder="Image" ng-model="vm.newProduct.image">
-      <input placeholder="description" ng-model="vm.newProduct.description">
+      <input placeholder="description" ng-model="vm.newProaduct.description">
         <button type="submit">Produce</button>
     </form>
   </div>
 <hr>
 
 <div data-ng-repeat="product in vm.products">
-  <h3>Name: {{product.name}}</h3>
+  <h3>Name: <a data-ui-sref="ordersIndex({vendor_id: vm.vendor.id, product_id: product.id})">{{product.name}} </a></h3>
   <h4>Category: {{product.category}}</h4>
   <h4>Amount: {{product.amount}} {{product.unit_of_measure}}</h4>
   <h4>Description: {{product.description}}</h4>

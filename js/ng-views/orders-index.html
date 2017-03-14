@@ -7,7 +7,8 @@
 </div> -->
 
 
-<h2>these are all the orders</h2>
+<h2>these are all the orders for {{vm.product.name}} of {{vm.vendor.name}}</h2>
+<button type="submit" ng-click="vm.product.$remove({vendor_id: vm.vendor.id, product_id:vm.product.id})">Delete Product</button>
 
 
 
