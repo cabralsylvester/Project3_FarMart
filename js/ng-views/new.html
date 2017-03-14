@@ -1,12 +1,3 @@
-<div data-ng-repeat="vendor in vm.vendors ">
-  <div class="vendor">
-      <h3> <a data-ui-sref="vendorShow({id: vendor.id})"> {{vendor.name}} </a></h3>
-      <h4> {{vendor.state}}, {{vendor.city}} </h4>
-      <img data-ng-src="{{vendor.image}}" />
-  </div>
-</div>
-
-<hr>
 <button class="add_vendor" ng-click="create = !create">Add a Vendor</button>
   <div class="new_form">
     <form class="adding" ng-show="create" ng-submit="vm.create()">

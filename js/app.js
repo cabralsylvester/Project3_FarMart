@@ -4,7 +4,6 @@ let vendor = [
   {name: "Cest la Apples", city: "Bayville", state: "VA", website: "http://www.apple.com/" , image: "http://cdn.rosannadavisonnutrition.com/wp-content/uploads/2015/12/apples.jpeg"  }
 ]
 
-
 angular
   .module("farmart", [
     "ui.router",
@@ -20,11 +19,13 @@ angular
   ])
   .controller("VendorIndexController", [
     "FarmartFactory",
+    "$state",
     VendorIndexControllerFunction
   ])
   .controller("VendorShowController", [
     "FarmartFactory",
     "$stateParams",
+    "$state",
     VendorShowControllerFunction
   ])
   // .controller("ProductsIndexController", [
@@ -57,9 +58,12 @@ function RouterFunction($stateProvider) {
 
 function FarmartFactoryFunction($resource, $stateParams){
   return {
-    vendors: $resource("http://localhost:3000/vendors/:id.json", {}, {
+    vendors: $resource("http://localhost:3000/vendors/:id.json", {id: "@id"}, {
       query: {method: "GET", params: {}, isArray: true },
-      get: {method: "GET", params: {}, isArray: false}
+      create: {method: "POST"},
+      get: {method: "GET", params: {}, isArray: false},
+      update: {method: "PUT", params: {id: "@id"}, isArray: false},
+      remove: {method: "DELETE", params: {id: "@id"}}
     }),
     products: $resource("http://localhost:3000/vendors/:vendor_id/products.json", {}, {
       query: {method: "GET", params: {}, isArray: true},
@@ -68,14 +72,34 @@ function FarmartFactoryFunction($resource, $stateParams){
   }
 }
 
-function VendorIndexControllerFunction(FarmartFactory) {
+function VendorIndexControllerFunction(FarmartFactory, $state) {
   this.vendors = FarmartFactory.vendors.query();
+  this.newVendor = new FarmartFactory.vendors
+  this.create = function() {
+      this.newVendor.$save(this.newVendor).then( () =>
+      this.newVendor = {}, $state.go("vendorIndex") )
+      }
 }
 
-function VendorShowControllerFunction(FarmartFactory, $stateParams) {
+function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
   this.vendor = FarmartFactory.vendors.get({id: $stateParams.id})
   this.products = FarmartFactory.products.query({vendor_id: $stateParams.id});
   console.log(this.products)
+
+  //edit vendor functionality
+  this.update = function(vendor){
+    this.vendor.$update({id: $stateParams.id}).then( () =>
+      $location.path("vendorShow(vendor.id)")
+    )
+  }
+
+// `delete vendor functionality
+  this.vendor.remove = function(vendor){
+    this.vendor.$remove({id: $stateParams.id}).then(
+     function(vendor) {
+    $state.go("vendorIndex")
+    })
+  }
 }
 
 
