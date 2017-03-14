@@ -31,7 +31,6 @@ angular
     "FarmartFactory",
     "$stateParams",
     "$state",
-    "$window",
     VendorShowControllerFunction
   ])
   .controller("OrdersIndexController", [
@@ -110,7 +109,7 @@ function VendorNewControllerFunction(FarmartFactory, $state) {
     }
 }
 
-function VendorShowControllerFunction(FarmartFactory, $stateParams, $state, $window) {
+function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
   this.vendor = FarmartFactory.vendors.get({id: $stateParams.id})
   this.products = FarmartFactory.products.query({vendor_id: $stateParams.id});
   console.log(this.products)
@@ -124,10 +123,10 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state, $win
 
 // `delete vendor functionality
   this.vendor.remove = function(vendor){
-    this.vendor.$remove({id: $stateParams.id}).then(
-     function(vendor) {
-    $window.go("vendorIndex")
+    this.vendor.$remove({id: $stateParams.id}, function () {
+      $state.go("vendorIndex")
     })
+  
   }
 }
 
