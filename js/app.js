@@ -50,7 +50,7 @@ function RouterFunction($stateProvider) {
     controllerAs: "vm"
   })
   .state("ordersIndex", {
-    url: "/vendors/:vendor_id/products/:id/orders",
+    url: "/vendors/:vendor_id/products/:product_id/orders",
     templateUrl: "js/ng-views/orders-index.html",
     controller: "OrdersIndexController",
     controllerAs: "vm"
@@ -72,15 +72,15 @@ function FarmartFactoryFunction($resource, $stateParams){
       update: {method: "PUT", params: {id: "@id"}, isArray: false},
       remove: {method: "DELETE", params: {id: "@id"}}
     }),
-    products: $resource( "http://localhost:3000/vendors/:vendor_id/products/:product_id.json", {vendor_id:"@id", product_id: "@id"}, {
+    products: $resource( "http://localhost:3000/vendors/:vendor_id/products/:product_id.json", {vendor_id:"@vendor_id", product_id: "@product_id"}, {
       query: {method: "GET", params: {}, isArray: true},
-      get: {method: "GET", params: {vendor_id: "@id", product_id: "@id"}, isArray: false},
-      create: {method: "POST", params: {vendor_id: "@id"}},
-      remove: {method: "DELETE", params: {vendor_id: "@id", product_id: "@id"}}
+      get: {method: "GET", params: {vendor_id: "@vendor_id", product_id: "@product_id"}, isArray: false},
+      create: {method: "POST", params: {vendor_id: "@vendor_id"}},
+      remove: {method: "DELETE", params: {vendor_id: "@vendor_id", product_id: "@product_id"}}
     }),
-    orders: $resource("http://localhost:3000/vendors/:vendor_id/products/:product_id/orders.json", {vendor_id: "@id", product_id: "@id"}, {
-      query: {method: "GET", params: {vendor_id: "@id", product_id: "@id"}, isArray: true},
-      get: {method: "GET", params: {vendor_id: "@id", product_id: "@id"}, isArray: false}
+    orders: $resource("http://localhost:3000/vendors/:vendor_id/products/:product_id/orders.json", {vendor_id: "@vendor_id", product_id: "@product_id"}, {
+      query: {method: "GET", params: {vendor_id: "@vendor_id", product_id: "@product_id"}, isArray: true},
+      get: {method: "GET", params: {vendor_id: "@vendor_id", product_id: "@product_id"}, isArray: false}
     })
   }
 }
@@ -124,6 +124,7 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
 
 }
 
+
 function OrdersIndexControllerFunction(FarmartFactory, $stateParams) {
   this.vendor = FarmartFactory.vendors.get({id: $stateParams.vendor_id})
   // this.products = FarmartFactory.products.query({vendor_id: $stateParams.vendor_id})
@@ -137,4 +138,5 @@ function OrdersIndexControllerFunction(FarmartFactory, $stateParams) {
           $state.go("vendorIndex")
         })
     }
+
 }

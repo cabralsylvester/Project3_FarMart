@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20170310212337) do
   create_table "orders", force: :cascade do |t|
     t.string   "customer_name"
     t.string   "contact_num"
-    t.datetime "pick_up_time",   default: '2017-03-12 18:06:23', null: false
+    t.datetime "pick_up_time",   default: '2017-03-14 21:50:08', null: false
     t.integer  "reserve_amount"
     t.integer  "product_id"
     t.datetime "created_at",                                     null: false
