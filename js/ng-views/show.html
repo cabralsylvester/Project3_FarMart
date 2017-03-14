@@ -2,7 +2,7 @@
   <h3> {{vm.vendor.name}} </h3>
   <p> {{vm.vendor.city}} , {{vm.vendor.state}} </p>
   <p> {{vm.vendor.website}} </p>
-  <p> <img ng-src={{vm.vendor.image}}> </p>
+  <p class="vendor"> <img ng-src={{vm.vendor.image}}> </p>
 </article>
 <button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)">Delete</button>
 
