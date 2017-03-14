@@ -8,7 +8,6 @@
   <p> Website: {{vm.vendor.website}} </p>
   <p class="vendor"> <img ng-src={{vm.vendor.image}}> </p>
 </article>
-<button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)">Delete</button>
 
 
 <button class="edit_vendor" ng-click="edit = !edit">Edit This Vendor</button>
@@ -21,6 +20,7 @@
       <input placeholder="Image" ng-model="vm.vendor.image">
         <button type="submit" ng-click="edit = !edit">Update</button>
     </form>
+    <button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)">Delete</button>
   </div>
 
 <h1>Products of {{vm.vendor.name}} </h1>
@@ -41,7 +41,8 @@
 <hr>
 
 <div data-ng-repeat="product in vm.products">
-  <h3>Name: <a data-ui-sref="ordersIndex({id:product.id})">{{product.name}} </a></h3>
+
+  <h3>Name: <a data-ui-sref="ordersIndex({vendor_id: vm.vendor.id, product_id: product.id})">{{product.name}} </a></h3>
   <h4>Category: {{product.category}}</h4>
   <h4>Amount: {{product.amount}} {{product.unit_of_measure}}</h4>
   <h4>Description: {{product.description}}</h4>
