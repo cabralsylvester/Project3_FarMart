@@ -125,7 +125,7 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
 }
 
 function OrdersIndexControllerFunction(FarmartFactory, $stateParams) {
-  this.vendor = FarmartFactory.vendors.get({id: $stateParams.vendor_id})
-  this.products = FarmartFactory.products.query({vendor_id: $stateParams.vendor_id})
-  this.orders = FarmartFactory.orders.query({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id});
+  this.vendor = FarmartFactory.vendors.get({id: $stateParams.id})
+  this.products = FarmartFactory.products.query({vendor_id: $stateParams.id})
+  this.orders = FarmartFactory.orders.query({vendor_id: $stateParams.id, product_id: $stateParams.id});
 }

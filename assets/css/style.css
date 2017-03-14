@@ -48,3 +48,7 @@ a {
 .logo {
   height: 260px;
 }
+
+.capitalize {
+  text-transform: capitalize;
+}
