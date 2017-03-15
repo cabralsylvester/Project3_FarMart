@@ -72,8 +72,16 @@ class OrdersController < ApplicationController
     @vendor = Vendor.find(params[:vendor_id])
     @product = Product.find(params[:product_id])
     @order = Order.find(params[:id])
-    @order.destroy
-    redirect_to "/vendors/#{@vendor.id}/products/#{@product.id}"
+
+    respond_to do |format|
+      if @order.destroy
+        format.html { render :back}
+        format.json { render json: {}, status: :no_content }
+      else
+        format.html { render :back}
+        format.json { render json: @order.errors, status: :unprocessable_entity}
+      end
+    end
   end
 
   def add_to_order
