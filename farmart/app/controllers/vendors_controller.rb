@@ -31,7 +31,7 @@ class VendorsController < ApplicationController
     respond_to do |format|
 
       if @vendor.save
-          format.html { redirect_to @vendor, notice: "Made the Grumbly" }
+          format.html { redirect_to @vendor, notice: "Made the Vendor" }
           format.json { render json: @vendor, status: :created, location: @vendor}
       else
         format.html {render :new }
@@ -47,7 +47,18 @@ class VendorsController < ApplicationController
   def update
     @vendor = Vendor.find(params[:id])
     @vendor.update(vendor_params)
-    redirect_to @vendor
+
+    respond_to do |format|
+
+      if @vendor.update
+          format.html { redirect_to @vendor, notice: "Edited the Vendor" }
+          format.json { render json: @vendor}
+      else
+        format.html {render :edit }
+        format.json { render json: @vendor.errors, status: :unprocessable_entity}
+      end
+
+    end
   end
 
   def destroy

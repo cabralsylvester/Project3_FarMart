@@ -52,6 +52,7 @@ a {
   height: 260px;
 }
 
+<<<<<<< HEAD
 /* media queries*/
 
 @media screen and /*(min-width: 0) and*/ (max-width: 600px) {
@@ -65,4 +66,8 @@ a {
 .homebox {
   margin: 0 auto;
 }
+=======
+.capitalize {
+  text-transform: capitalize;
+>>>>>>> 6de22cb77b13d60b36465b856814516ad7e5d29c
 }
