@@ -1,3 +1,6 @@
+<h1>FarMart Vendors</h1>
+<div class="vendor-index">
+
 <div data-ng-repeat="vendor in vm.vendors ">
   <div class="vendor">
       <h3> <a data-ui-sref="vendorShow({id: vendor.id})"> {{vendor.name}} </a></h3>
@@ -5,8 +8,10 @@
       <img data-ng-src="{{vendor.image}}" />
   </div>
 </div>
-
+</div>
 <hr>
+<div class="well">
+
 <button class="add_vendor" ng-click="create = !create">Add a Vendor</button>
   <div class="new_form">
     <form class="adding" ng-show="create" ng-submit="vm.create()">
@@ -18,3 +23,4 @@
         <button type="submit">Create</button>
     </form>
   </div>
+</div>
