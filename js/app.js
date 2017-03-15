@@ -142,10 +142,9 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
 // add product functionality
   this.newProduct = new FarmartFactory.products
    this.create = function() {
-     this.newProduct.$save({vendor_id: $stateParams.id})
-   }
-   this.reloadState = function(){
-     $state.reload();
+     this.newProduct.$save({vendor_id: $stateParams.id}, function(){
+       $state.reload()
+     })
    }
 }
 
@@ -158,18 +157,18 @@ function ProductShowControllerFunction(FarmartFactory, $stateParams, $state) {
 
 
   // delete product functionality
-    this.product.remove = function(vendor, product){
-      this.product.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id}).then(
+    this.remove = function(vendor, product){
+      this.product.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id},
         function(){
-          $state.go("vendorIndex")
+          $state.go("vendorShow",{})
         })
     }
 
   // edit product functionality
-    this.product.update = function(vendor, product){
-      this.product.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id}).then( () =>
-        $location.path("vendorShow(this.vendor.id)")
-      )
+    this.update = function(vendor, product){
+      this.product.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id}, function(){
+        $state.go("vendorShow",{vendor_id: this.vendor.id, product_id: this.product.id})
+      })
     }
 
   // add order functionality
@@ -183,18 +182,17 @@ function ProductShowControllerFunction(FarmartFactory, $stateParams, $state) {
 
 function OrderShowControllerFunction(FarmartFactory, $stateParams) {
   this.vendor = FarmartFactory.vendors.get({id: $stateParams.vendor_id})
-  console.log(this.vendor)
   this.product = FarmartFactory.products.get({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id})
   this.order = FarmartFactory.orders.get({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id})
 
   // edit order functionality
-    this.order.update = function(vendor, product, order) {
+    this.update = function(vendor, product, order) {
       this.order.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}).then(() =>
         $location.path("productShow(this.product.id)")
       )}
 
   // delete order functionality
-    this.order.remove = function(vendor, product, order){
+    this.remove = function(vendor, product, order){
       this.order.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}).then(() =>
       $location.path("productShow(this.product.id)")
     )}

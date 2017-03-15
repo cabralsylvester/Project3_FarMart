@@ -1,7 +1,7 @@
 <h2>Orders for {{vm.product.name}} of {{vm.vendor.name}}</h2>
 <button class="edit_product" ng-click="editP = !editP">Edit This Product</button>
   <div class="edit_form">
-    <form class="editing" ng-show="editP" ng-submit="vm.product.$update({vendor_id: vm.vendor.id, product_id: vm.product.id})">
+    <form class="editing" ng-show="editP" ng-submit="vm.update({vendor_id: vm.vendor.id, product_id: vm.product.id})">
       <input placeholder="Category" ng-model="vm.product.category">
       <input placeholder="Product Name" ng-model="vm.product.name">
       <input type="number" placeholder="Amount" ng-model="vm.product.amount">
@@ -9,7 +9,7 @@
       <input placeholder="Image" ng-model="vm.product.image">
       <input placeholder="description" ng-model="vm.product.description">
         <button type="submit" >Update</button>
-        <button type="submit" ng-click="vm.product.$remove({vendor_id: vm.vendor.id, product_id: vm.product.id})">Delete Product</button>
+        <button type="submit" ng-click="vm.remove({vendor_id: vm.vendor.id, product_id: vm.product.id})">Delete Product</button>
     </form>
   </div>
   <button class="add_order" ng-click="createO = !createO">Add an Order</button>
