@@ -140,6 +140,7 @@ function ProductShowControllerFunction(FarmartFactory, $stateParams) {
   this.product = FarmartFactory.products.get({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id})
   this.orders = FarmartFactory.orders.query({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id})
 
+
   // delete product functionality
     this.product.remove = function(vendor, product){
       this.product.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id}).then(
