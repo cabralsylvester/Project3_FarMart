@@ -63,8 +63,15 @@ class VendorsController < ApplicationController
 
   def destroy
     @vendor = Vendor.find(params[:id])
-    @vendor.destroy
-    redirect_to vendors_path
+    respond_to do |format|
+      if @vendor.destroy!
+        format.html { redirect_to vendors_path }
+        format.json { render json: {}, status: :no_content}
+      else
+        format.html { redirect_to :back }
+        format.json { @vendor.errors }
+      end
+    end
   end
 
   private

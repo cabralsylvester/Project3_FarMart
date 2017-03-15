@@ -64,8 +64,17 @@ class ProductsController < ApplicationController
   def destroy
     @vendor = Vendor.find(params[:vendor_id])
     @product = Product.find(params[:id])
-    @product.destroy
-    redirect_to @vendor
+
+    respond_to do |format|
+      if @product.destroy
+        format.html { edirect_to @vendor, notice: "Product deleted" }
+        format.json { render json: {}, status: :no_content }
+      else
+        format.html { render :new}
+        format.json { render json: @product.errors, status: :unprocessable_entity}
+      end
+    end
+
   end
   #
   # def add_to_order
