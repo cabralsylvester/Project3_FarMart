@@ -4,7 +4,7 @@
 
 # Technologies:
 
-`AngularJS, Rails API, Twitter Bootstrap`
+`AngularJS, Rails API, Bootstrap`
 
 # User Stories:
 
