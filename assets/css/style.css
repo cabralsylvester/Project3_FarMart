@@ -1,3 +1,6 @@
+
+
+
 .vendor img {
   width: 500px;
   height: 300px;
@@ -25,11 +28,11 @@
 .homebox {
   position: absolute;
   height: 350px;
-  width: 600px;
+  max-width: 600px;
   border-radius: 40px;
   background: rgba(255, 255, 255, .4);
   top: 50%;
-  left: 45%;
+  left: 40%;
   margin: -100px 0 0 -150px;
   text-align: center;
   font-size: 43px;
@@ -47,4 +50,19 @@ a {
 
 .logo {
   height: 260px;
+}
+
+/* media queries*/
+
+@media screen and /*(min-width: 0) and*/ (max-width: 600px) {
+.bgvideo {
+  display: none;
+  /*background-color: black;*/
+}
+.fullscreen-bg {
+  display: none;
+  }
+.homebox {
+  margin: 0 auto;
+}
 }
