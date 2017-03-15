@@ -91,7 +91,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:customer_name, :pick_up_time, :reserve_amount)
+    params.require(:order).permit(:customer_name, :contact_num, :pick_up_time, :reserve_amount)
   end
 
   def product_params
