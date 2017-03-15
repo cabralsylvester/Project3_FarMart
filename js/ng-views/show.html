@@ -1,10 +1,13 @@
+<a data-ui-sref="vendorIndex"><button>
+Vendors List
+</button></a>
+
 <article>
   <h3> {{vm.vendor.name}} </h3>
   <p> {{vm.vendor.city}} , {{vm.vendor.state}} </p>
   <p> Website: {{vm.vendor.website}} </p>
   <p class="vendor"> <img ng-src={{vm.vendor.image}}> </p>
 </article>
-<button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)">Delete</button>
 
 
 <button class="edit_vendor" ng-click="edit = !edit">Edit This Vendor</button>
@@ -15,34 +18,33 @@
       <input placeholder="State" ng-model="vm.vendor.state">
       <input placeholder="Website Link" ng-model="vm.vendor.website">
       <input placeholder="Image" ng-model="vm.vendor.image">
-        <button type="submit" >Update</button>
+        <button type="submit" ng-click="edit = !edit">Update</button>
     </form>
+    <button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)">Delete</button>
   </div>
 
 <h1>Products of {{vm.vendor.name}} </h1>
 
-<hr>
 <button class="add_product" ng-click="createP = !createP">Add a Product</button>
   <div class="new_form">
     <form class="adding" ng-show="createP" ng-submit="vm.create(newProduct)">
       <input placeholder="Category" ng-model="vm.newProduct.category">
       <input placeholder="Product Name" ng-model="vm.newProduct.name">
-      <input placeholder="Amount" ng-model="vm.newProduct.amount">
+      <input type='number' placeholder="Amount" ng-model="vm.newProduct.amount">
       <input placeholder="Unit of Measurement" ng-model="vm.newProduct.unit_of_measure">
       <input placeholder="Image" ng-model="vm.newProduct.image">
       <input placeholder="description" ng-model="vm.newProduct.description">
         <button type="submit">Produce</button>
     </form>
   </div>
-<hr>
 
 <div data-ng-repeat="product in vm.products">
-  <h3>Name: <a data-ui-sref="ordersIndex({id:product.id})">{{product.name}} </a></h3>
+
+  <h3>Name: <a data-ui-sref="productShow({vendor_id: vm.vendor.id, product_id: product.id})">{{product.name}} </a></h3>
   <h4>Category: {{product.category}}</h4>
   <h4>Amount: {{product.amount}} {{product.unit_of_measure}}</h4>
   <h4>Description: {{product.description}}</h4>
   <p> <img ng-src="{{product.image}}"> </p>
 
-
-
 </div>
+<hr>

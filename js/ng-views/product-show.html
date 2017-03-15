@@ -1,0 +1,40 @@
+<h2>Orders for {{vm.product.name}} of {{vm.vendor.name}}</h2>
+<button class="edit_product" ng-click="editP = !editP">Edit This Product</button>
+  <div class="edit_form">
+    <form class="editing" ng-show="editP" ng-submit="vm.product.$update({vendor_id: vm.vendor.id, product_id: vm.product.id})">
+      <input placeholder="Category" ng-model="vm.product.category">
+      <input placeholder="Product Name" ng-model="vm.product.name">
+      <input type="number" placeholder="Amount" ng-model="vm.product.amount">
+      <input placeholder="Unit of Measurement" ng-model="vm.product.unit_of_measure">
+      <input placeholder="Image" ng-model="vm.product.image">
+      <input placeholder="description" ng-model="vm.product.description">
+        <button type="submit" >Update</button>
+        <button type="submit" ng-click="vm.product.$remove({vendor_id: vm.vendor.id, product_id: vm.product.id})">Delete Product</button>
+    </form>
+  </div>
+  <button class="add_order" ng-click="createO = !createO">Add an Order</button>
+    <div class="new_form">
+      <form class="adding" ng-show="createO" ng-submit="vm.create(newOrder)">
+        <input placeholder="Customer Name" ng-model="vm.newOrder.customer_name">
+        <input placeholder="Contact Number" ng-model="vm.newOrder.contact_num">
+        <input type="datetime-local" placeholder="Pick up Time" ng-model="vm.newOrder.pick_up_time">
+        <input type="number" placeholder="Reserve Amount" ng-model="vm.newOrder.reserve_amount">
+          <button type="submit">Produce</button>
+      </form>
+    </div>
+
+
+
+  <div data-ng-repeat="order in vm.orders">
+
+    <div>
+        <h3 class="capitalize">Customer Name: <a data-ui-sref="orderShow({vendor_id: vm.vendor.id, product_id: vm.product.id, order_id: order.id})">{{order.customer_name}} </a></h3>
+        <h3>Phone: {{order.contact_num}}</h3>
+        <h3>Pick Up Time: {{order.pick_up_time}}</h3>
+        <h3>Reserve Amount: {{order.reserve_amount}}</h3>
+        <h3>Created: {{order.created_at}}</h3>
+        <h3>Updated: {{order.updated_at}}</h3>
+
+    </div>
+    <hr>
+  </div>
