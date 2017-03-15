@@ -42,6 +42,7 @@ angular
   .controller("OrderShowController", [
     "FarmartFactory",
     "$stateParams",
+    "$state",
     OrderShowControllerFunction
   ])
 
@@ -159,41 +160,46 @@ function ProductShowControllerFunction(FarmartFactory, $stateParams, $state) {
   // delete product functionality
     this.remove = function(vendor, product){
       this.product.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id},
-        function(){
-          $state.go("vendorShow",{})
+        (vendor) => {
+          $state.go("vendorShow", {id: $stateParams.vendor_id})
         })
     }
 
-  // edit product functionality
+  // edit product functionality // redirect still not working
     this.update = function(vendor, product){
-      this.product.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id}, function(){
-        $state.go("vendorShow",{vendor_id: this.vendor.id, product_id: this.product.id})
-      })
+      this.product.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id},
+        (vendor) => {
+          $state.go("vendorShow", {id: $stateParams.vendor_id})
+        })
     }
 
   // add order functionality
     this.newOrder = new FarmartFactory.orders
     this.create = function() {
-      this.newOrder.$save({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id}). then(() =>
-      this.newOrder = {}
-    )}
+      this.newOrder.$save({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id},
+      () => {
+      $state.reload()
+    })
+  }
 }
 
 
-function OrderShowControllerFunction(FarmartFactory, $stateParams) {
+function OrderShowControllerFunction(FarmartFactory, $stateParams, $state) {
   this.vendor = FarmartFactory.vendors.get({id: $stateParams.vendor_id})
   this.product = FarmartFactory.products.get({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id})
   this.order = FarmartFactory.orders.get({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id})
 
   // edit order functionality
     this.update = function(vendor, product, order) {
-      this.order.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}).then(() =>
-        $location.path("productShow(this.product.id)")
-      )}
+      this.order.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}, () => {
+        $state.reload()
+      })
+    }
 
   // delete order functionality
     this.remove = function(vendor, product, order){
-      this.order.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}).then(() =>
-      $location.path("productShow(this.product.id)")
-    )}
+      this.order.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}, (vendor, product) => {
+      $state.go("productShow", {vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id})
+    })
+  }
 }

@@ -54,7 +54,7 @@ class ProductsController < ApplicationController
         format.html { redirect_to "/vendors/#{@vendor.id}/products/#{@product.id}", notice: "Product updated" }
         format.json { render json: @product, status: :updated }
       else
-        format.html { render :new}
+        format.html { render :back}
         format.json { render json: @product.errors, status: :unprocessable_entity}
       end
     end
@@ -67,10 +67,10 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.destroy
-        format.html { edirect_to @vendor, notice: "Product deleted" }
+        format.html { redirect_to @vendor, notice: "Product deleted" }
         format.json { render json: {}, status: :no_content }
       else
-        format.html { render :new}
+        format.html { render :back}
         format.json { render json: @product.errors, status: :unprocessable_entity}
       end
     end
@@ -93,7 +93,7 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:category, :name, :amount, :unit_of_measure, :image, :description)
+    params.require(:product).permit(:category, :name, :amount, :unit_of_measure, :image, :description )
   end
 
   def order_params

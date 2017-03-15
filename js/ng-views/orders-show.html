@@ -13,7 +13,7 @@
       <input placeholder="Contact Number" ng-model="vm.order.contact_num">
       <input type="datetime-local" placeholder="Pick up Time" ng-model="vm.order.pick_up_time">
       <input type="number" placeholder="Reserve Amount" ng-model="vm.order.reserve_amount">
-        <button type="submit" ng-click="vm.order.$update({vendor_id: vm.vendor.id, product_id: vm.product.id, order_id: vm.order.id})">Update</button>
-        <button type="submit" ng-click="vm.order.$remove({vendor_id: vm.vendor.id, product_id: vm.product.id , order_id: vm.order.id})">Delete order</button>
+        <button type="submit" ng-click="editO = !editO" ng-click="vm.update({vendor_id: vm.vendor.id, product_id: vm.product.id, order_id: vm.order.id})">Update</button>
     </form>
+    <button type="submit" ng-click="vm.remove({vendor_id: vm.vendor.id, product_id: vm.product.id , order_id: vm.order.id})">Delete order</button>
   </div>
