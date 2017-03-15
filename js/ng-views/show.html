@@ -20,7 +20,7 @@ Vendors List
       <input placeholder="Image" ng-model="vm.vendor.image">
         <button type="submit" ng-click="edit = !edit">Update</button>
     </form>
-    <button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)">Delete</button>
+    <a data-ui-sref="vendorIndex"><button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)">Delete</button></a>
   </div>
 
 <h1>Products of {{vm.vendor.name}} </h1>
