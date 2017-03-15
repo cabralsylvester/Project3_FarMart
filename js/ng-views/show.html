@@ -20,7 +20,7 @@ Vendors List
       <input placeholder="Image" ng-model="vm.vendor.image">
         <button type="submit" ng-click="edit = !edit">Update</button>
     </form>
-    <a data-ui-sref="vendorIndex"><button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)">Delete</button></a>
+    <a data-ui-sref="vendorIndex"><button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)" >Delete</button></a>
   </div>
 
 <h1>Products of {{vm.vendor.name}} </h1>
@@ -34,7 +34,7 @@ Vendors List
       <input placeholder="Unit of Measurement" ng-model="vm.newProduct.unit_of_measure">
       <input placeholder="Image" ng-model="vm.newProduct.image">
       <input placeholder="description" ng-model="vm.newProduct.description">
-        <button type="submit">Produce</button>
+        <button type="submit" ng-click="reloadState()" ng-click="createP = !createP">Produce</button>
     </form>
   </div>
 

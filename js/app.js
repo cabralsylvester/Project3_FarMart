@@ -133,17 +133,18 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
 
 // delete vendor functionality
   this.vendor.remove = function(vendor){
-    this.vendor.$remove({id: $stateParams.id}, function(vendor){
-    $state.reload("vendorIndex")
-    })
+    this.vendor.$remove({id: $stateParams.id}, function(){
+    $state.go("vendorIndex")
+  }).then(() => $state.reload())
   }
 
 // add product functionality
   this.newProduct = new FarmartFactory.products
   this.create = function() {
-    this.newProduct.$save({vendor_id: $stateParams.id}, function(vendor){
-      $state.reload()
-    })
+    this.newProduct.$save({vendor_id: $stateParams.id})
+  }
+  this.reloadState = function(){
+    $state.reload();
   }
 }
 
@@ -171,10 +172,11 @@ function ProductShowControllerFunction(FarmartFactory, $stateParams) {
   // add order functionality
     this.newOrder = new FarmartFactory.orders
     this.create = function() {
-      this.newOrder.$save({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id}). then(() =>
-      this.newOrder = {}
-    )}
-}
+      this.newOrder.$save({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id}, function(vendor) {
+        $state.go($state.current, {}, {reload: true})
+      })
+    }
+  }
 
 
 function OrderShowControllerFunction(FarmartFactory, $stateParams) {
@@ -185,13 +187,15 @@ function OrderShowControllerFunction(FarmartFactory, $stateParams) {
 
   // edit order functionality
     this.order.update = function(vendor, product, order) {
-      this.order.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}).then(() =>
-        $location.path("productShow(this.product.id)")
-      )}
+      this.order.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}, function() {
+        $state.go($state.current, {}, {reload: true})
+      })
+    }
 
   // delete order functionality
     this.order.remove = function(vendor, product, order){
-      this.order.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}).then(() =>
-      $location.path("productShow(this.product.id)")
-    )}
-}
+      this.order.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}, function() {
+        $state.go($state.current, {}, {reload: true})
+      })
+    }
+  }
