@@ -107,7 +107,7 @@ a {
 .capitalize {
   text-transform: capitalize;
 }
- input, select {
+ input, select, button {
    color: black !important;
  }
 
