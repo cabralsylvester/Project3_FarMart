@@ -1,4 +1,4 @@
-
+<div class="container">
 <h1>FarMart Vendors</h1>
 <div class="vendor-index">
 
@@ -14,16 +14,17 @@
 </div>
 <hr>
 <div class="well">
+  <button class="add_vendor" ng-click="create = !create">Add a Vendor</button>
+    <div class="new_form">
+      <form class="adding" ng-show="create" ng-submit="vm.create()">
+        <input placeholder="Name" ng-model="vm.newVendor.name">
+        <input placeholder="City" ng-model="vm.newVendor.city">
+        <input placeholder="State" ng-model="vm.newVendor.state">
+        <input placeholder="Website Link" ng-model="vm.newVendor.website">
+        <input placeholder="Image" ng-model="vm.newVendor.image">
+          <button type="submit">Create</button>
+      </form>
+    </div>
+</div>
 
-<button class="add_vendor" ng-click="create = !create">Add a Vendor</button>
-  <div class="new_form">
-    <form class="adding" ng-show="create" ng-submit="vm.create()">
-      <input placeholder="Name" ng-model="vm.newVendor.name">
-      <input placeholder="City" ng-model="vm.newVendor.city">
-      <input placeholder="State" ng-model="vm.newVendor.state">
-      <input placeholder="Website Link" ng-model="vm.newVendor.website">
-      <input placeholder="Image" ng-model="vm.newVendor.image">
-        <button type="submit">Create</button>
-    </form>
-  </div>
 </div>
