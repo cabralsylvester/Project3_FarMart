@@ -1,8 +1,8 @@
-
+<div class="container">
 <div class="well"> <a data-ui-sref="vendorIndex"><button>Vendors List </button></a> </div>
 
 <article>
-  <h3> {{vm.vendor.name}} </h3>
+  <h2> {{vm.vendor.name}} </h2>
   <p> {{vm.vendor.city}} , {{vm.vendor.state}} </p>
   <p> Website: {{vm.vendor.website}} </p>
   <p class="vendor"> <img ng-src={{vm.vendor.image}}> </p>
@@ -12,6 +12,7 @@
 <div class="well">
 
   <button class="edit_vendor" ng-click="edit = !edit">Edit This Vendor</button>
+
     <div class="edit_form">
       <form class="editing" ng-show="edit" ng-submit="vm.update(vm.vendor)">
         <input placeholder="Name" ng-model="vm.vendor.name">
@@ -20,13 +21,14 @@
         <input placeholder="Website Link" ng-model="vm.vendor.website">
         <input placeholder="Image" ng-model="vm.vendor.image">
           <button type="submit" ng-click="edit = !edit">Update</button>
+          <br>
       </form>
       <button type="submit" ng-click="vm.vendor.$remove(vm.vendor.id)">Delete</button>
     </div>
 </div>
 
 
-<h1>Products of {{vm.vendor.name}} </h1>
+<h2>Products of {{vm.vendor.name}} </h2>
 
 <div class="well">
 <button class="add_product" ng-click="createP = !createP">Add a Product</button>
@@ -53,3 +55,4 @@
   </div>
 </div>
 <hr>
+</div>
