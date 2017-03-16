@@ -7,7 +7,7 @@ class CreateProducts < ActiveRecord::Migration[5.0]
       t.string :unit_of_measure
       t.string :image
       t.string :description
-      t.timestamps null: false
+      t.timestamps null: true
       t.references :vendor, index: true, foreign_key: true
     end
   end

@@ -6,7 +6,7 @@ class CreateOrders < ActiveRecord::Migration[5.0]
       t.datetime :pick_up_time, :null => false, :default => Time.now
       t.integer :reserve_amount
       t.references :product, index: true, foreign_key: true
-      t.timestamps null: false
+      t.timestamps null: true
     end
   end
 end
