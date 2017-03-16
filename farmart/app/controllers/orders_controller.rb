@@ -72,8 +72,16 @@ class OrdersController < ApplicationController
     @vendor = Vendor.find(params[:vendor_id])
     @product = Product.find(params[:product_id])
     @order = Order.find(params[:id])
-    @order.destroy
-    redirect_to "/vendors/#{@vendor.id}/products/#{@product.id}"
+
+    respond_to do |format|
+      if @order.destroy
+        format.html { render :back}
+        format.json { render json: {}, status: :no_content }
+      else
+        format.html { render :back}
+        format.json { render json: @order.errors, status: :unprocessable_entity}
+      end
+    end
   end
 
   def add_to_order
@@ -91,7 +99,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:customer_name, :pick_up_time, :reserve_amount)
+    params.require(:order).permit(:customer_name, :contact_num, :pick_up_time, :reserve_amount)
   end
 
   def product_params

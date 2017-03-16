@@ -1,6 +1,10 @@
+<a data-ui-sref="vendorNew"><button>
+Add a vendor
+</button></a>
+
 <div data-ng-repeat="vendor in vm.vendors ">
   <div class="vendor">
-      <h3> <a data-ui-sref="farmartShow({id: vendor.id})"> {{vendor.name}} </a></h3>
+      <h3> <a data-ui-sref="vendorShow({id: vendor.id})"> {{vendor.name}} </a></h3>
       <h4> {{vendor.state}}, {{vendor.city}} </h4>
       <img data-ng-src="{{vendor.image}}" />
   </div>

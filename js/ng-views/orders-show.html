@@ -1,0 +1,19 @@
+<h1> {{vm.order.customer_name}}'s order of the {{vm.vendor.name}}'s {{vm.product.name}} </h1>
+<h3 class="capitalize">Customer Name: {{vm.order.customer_name}}</h3>
+<h3>Phone: {{vm.order.contact_num}}</h3>
+<h3>Pick Up Time: {{vm.order.pick_up_time}}</h3>
+<h3>Reserve Amount: {{vm.order.reserve_amount}}</h3>
+<h3>Created: {{vm.order.created_at}}</h3>
+<h3>Updated: {{vm.order.updated_at}}</h3>
+<hr>
+<button class="edit_order" ng-click="editO = !editO">Edit This order</button>
+  <div class="edit_form">
+    <form class="editing" ng-show="editO">
+      <input placeholder="Customer Name" ng-model="vm.order.customer_name">
+      <input placeholder="Contact Number" ng-model="vm.order.contact_num">
+      <input type="datetime-local" placeholder="Pick up Time" ng-model="vm.order.pick_up_time">
+      <input type="number" placeholder="Reserve Amount" ng-model="vm.order.reserve_amount">
+        <button type="submit" ng-click="editO = !editO" ng-click="vm.update({vendor_id: vm.vendor.id, product_id: vm.product.id, order_id: vm.order.id})">Update</button>
+    </form>
+    <button type="submit" ng-click="vm.remove({vendor_id: vm.vendor.id, product_id: vm.product.id , order_id: vm.order.id})">Delete order</button>
+  </div>

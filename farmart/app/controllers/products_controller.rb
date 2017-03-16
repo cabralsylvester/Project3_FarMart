@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       format.html { render :index}
-      format.json {render json: @products }
+      format.json {render json: @products, include: :orders }
     end
   end
 
@@ -48,13 +48,13 @@ class ProductsController < ApplicationController
   def update
     @vendor = Vendor.find(params[:vendor_id])
     @product = Product.find(params[:id])
-
+    @product.update(product_params)
     respond_to do |format|
-      if @product.update!(product_params)
-        format.html { redirect_to "/vendors/#{@vendor.id}/products/#{@product.id}", notice: "Product updated" }
+      if @product.update
+        format.html { redirect_to @product, notice: "Product updated" }
         format.json { render json: @product, status: :updated }
       else
-        format.html { render :new}
+        format.html { render :back}
         format.json { render json: @product.errors, status: :unprocessable_entity}
       end
     end
@@ -64,8 +64,17 @@ class ProductsController < ApplicationController
   def destroy
     @vendor = Vendor.find(params[:vendor_id])
     @product = Product.find(params[:id])
-    @product.destroy
-    redirect_to @vendor
+
+    respond_to do |format|
+      if @product.destroy
+        format.html { redirect_to @vendor, notice: "Product deleted" }
+        format.json { render json: {}, status: :no_content }
+      else
+        format.html { render :back}
+        format.json { render json: @product.errors, status: :unprocessable_entity}
+      end
+    end
+
   end
   #
   # def add_to_order
@@ -84,7 +93,7 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:category, :name, :amount, :unit_of_measure, :image, :description)
+    params.require(:product).permit(:category, :name, :amount, :unit_of_measure, :image, :description )
   end
 
   def order_params

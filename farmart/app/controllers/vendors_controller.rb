@@ -9,7 +9,7 @@ class VendorsController < ApplicationController
     @vendors = Vendor.all.order(:created_at)
     respond_to do |format|
       format.html {render :index}
-      format.json {render json: @vendors}
+      format.json {render json: @vendors, include: :products}
     end
   end
 
@@ -31,7 +31,7 @@ class VendorsController < ApplicationController
     respond_to do |format|
 
       if @vendor.save
-          format.html { redirect_to @vendor, notice: "Made the Grumbly" }
+          format.html { redirect_to @vendor, notice: "Made the Vendor" }
           format.json { render json: @vendor, status: :created, location: @vendor}
       else
         format.html {render :new }
@@ -47,13 +47,31 @@ class VendorsController < ApplicationController
   def update
     @vendor = Vendor.find(params[:id])
     @vendor.update(vendor_params)
-    redirect_to @vendor
+
+    respond_to do |format|
+
+      if @vendor.update
+          format.html { redirect_to @vendor, notice: "Edited the Vendor" }
+          format.json { render json: @vendor}
+      else
+        format.html {render :edit }
+        format.json { render json: @vendor.errors, status: :unprocessable_entity}
+      end
+
+    end
   end
 
   def destroy
     @vendor = Vendor.find(params[:id])
-    @vendor.destroy
-    redirect_to vendors_path
+    respond_to do |format|
+      if @vendor.destroy!
+        format.html { redirect_to vendors_path }
+        format.json { render json: {}, status: :no_content}
+      else
+        format.html { redirect_to :back }
+        format.json { @vendor.errors }
+      end
+    end
   end
 
   private
