@@ -48,10 +48,10 @@ class ProductsController < ApplicationController
   def update
     @vendor = Vendor.find(params[:vendor_id])
     @product = Product.find(params[:id])
-
+    @product.update(product_params)
     respond_to do |format|
-      if @product.update!(product_params)
-        format.html { redirect_to "/vendors/#{@vendor.id}/products/#{@product.id}", notice: "Product updated" }
+      if @product.update
+        format.html { redirect_to @product, notice: "Product updated" }
         format.json { render json: @product, status: :updated }
       else
         format.html { render :back}

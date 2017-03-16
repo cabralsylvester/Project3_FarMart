@@ -167,11 +167,12 @@ function ProductShowControllerFunction(FarmartFactory, $stateParams, $state) {
 
   // edit product functionality // redirect still not working
     this.update = function(vendor, product){
-      this.product.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id},
-        (vendor) => {
-          $state.go("vendorShow", {id: $stateParams.vendor_id})
-        })
-    }
+      this.product.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id}, {},
+        () => {
+        $state.go("vendorShow", {id: $stateParams.vendor_id})
+      })
+     }
+
 
   // add order functionality
     this.newOrder = new FarmartFactory.orders

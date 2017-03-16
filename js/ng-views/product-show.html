@@ -1,14 +1,26 @@
+<a data-ui-sref="vendorIndex"><button> Vendor List </button></a>
+
 <h2>Orders for {{vm.product.name}} of {{vm.vendor.name}}</h2>
 <button class="edit_product" ng-click="editP = !editP">Edit This Product</button>
   <div class="edit_form">
     <form class="editing" ng-show="editP" ng-submit="vm.update(vm.product)">
-      <input placeholder="Category" ng-model="vm.product.category">
+      <select ng-model="vm.product.category">
+        <option value="Meat">Meat</option>
+        <option value="Poultry">Poultry</option>
+        <option value="Fish">Fish</option>
+        <option value="Dairy">Dairy</option>
+        <option value="Fruits">Fruit</option>
+        <option value="Breads">Bread</option>
+        <option value="Grains">Grains</option>
+        <option value="Vegetables">Vegetables</option>
+        <option value="Other">Other</option>
+      </select>
       <input placeholder="Product Name" ng-model="vm.product.name">
       <input type="number" placeholder="Amount" ng-model="vm.product.amount">
       <input placeholder="Unit of Measurement" ng-model="vm.product.unit_of_measure">
       <input placeholder="Image" ng-model="vm.product.image">
       <input placeholder="description" ng-model="vm.product.description">
-        <button type="submit" >Update</button>
+        <button type="submit">Update</button>
     </form>
     <button type="button" ng-click="vm.remove({vendor_id: vm.vendor.id, product_id: vm.product.id})">Delete Product</button>
   </div>

@@ -28,7 +28,17 @@ Vendors List
 <button class="add_product" ng-click="createP = !createP">Add a Product</button>
   <div class="new_form">
     <form class="adding" ng-show="createP" ng-submit="vm.create(newProduct)">
-      <input placeholder="Category" ng-model="vm.newProduct.category">
+      <select ng-model="vm.newProduct.category">
+        <option value="Meat">Meat</option>
+        <option value="Poultry">Poultry</option>
+        <option value="Fish">Fish</option>
+        <option value="Dairy">Dairy</option>
+        <option value="Fruits">Fruit</option>
+        <option value="Breads">Bread</option>
+        <option value="Grains">Grains</option>
+        <option value="Vegetables">Vegetables</option>
+        <option value="Other">Other</option>
+      </select>
       <input placeholder="Product Name" ng-model="vm.newProduct.name">
       <input type='number' placeholder="Amount" ng-model="vm.newProduct.amount">
       <input placeholder="Unit of Measurement" ng-model="vm.newProduct.unit_of_measure">
