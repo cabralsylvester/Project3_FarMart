@@ -5,6 +5,14 @@
   margin-right: 180px;
   color: white;
 }
+#new-vendor {
+  height: auto !important;
+  padding: 50px auto;
+}
+
+.new-vendor-form {
+  margin: 50% 0 !important;
+}
 .vendor-index {
   display: flex;
   justify-content: space-around;
@@ -99,9 +107,10 @@ a {
 .capitalize {
   text-transform: capitalize;
 }
- input {
+ input, select {
    color: black !important;
  }
+
 /*@media screen and (max-width: 600px) {
     .fullscreen-bg {
       display: none;

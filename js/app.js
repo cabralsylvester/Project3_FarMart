@@ -83,21 +83,21 @@ function RouterFunction($stateProvider) {
 
 function FarmartFactoryFunction($resource, $stateParams){
   return {
-    vendors: $resource( "http://localhost:3000/vendors/:id.json", {id: "@id"}, {
+    vendors: $resource( "https://farmart-api.herokuapp.com/vendors/:id.json", {id: "@id"}, {
       query: {method: "GET", params: {}, isArray: true },
       create: {method: "POST"},
       get: {method: "GET", params: {id: "@id"}, isArray: false},
       update: {method: "PUT", params: {id: "@id"}, isArray: false},
       remove: {method: "DELETE", params: {id: "@id"}}
     }),
-    products: $resource( "http://localhost:3000/vendors/:vendor_id/products/:product_id.json", {vendor_id:"@vendor_id", product_id: "@product_id"}, {
+    products: $resource( "https://farmart-api.herokuapp.com/vendors/:vendor_id/products/:product_id.json", {vendor_id:"@vendor_id", product_id: "@product_id"}, {
       query: {method: "GET", params: {}, isArray: true},
       get: {method: "GET", params: {vendor_id: "@vendor_id", product_id: "@product_id"}, isArray: false},
       create: {method: "POST", params: {vendor_id: "@vendor_id"}},
       remove: {method: "DELETE", params: {vendor_id: "@vendor_id", product_id: "@product_id"}},
       update: {method: "PUT", params: {vendor_id: "@vendor_id", product_id: "@product_id"}}
     }),
-    orders: $resource("http://localhost:3000/vendors/:vendor_id/products/:product_id/orders/:order_id.json", {vendor_id: "@vendor_id", product_id: "@product_id", order_id: "@order_id"}, {
+    orders: $resource("https://farmart-api.herokuapp.com/vendors/:vendor_id/products/:product_id/orders/:order_id.json", {vendor_id: "@vendor_id", product_id: "@product_id", order_id: "@order_id"}, {
       query: {method: "GET", params: {vendor_id: "@vendor_id", product_id: "@product_id"}, isArray: true},
       get: {method: "GET", params: {vendor_id: "@vendor_id", product_id: "@product_id", order_id: "@order_id"}, isArray: false},
       create: {method: "POST",params: {vendor_id: "@vendor_id", product_id: "@product_id"}},

@@ -3,10 +3,9 @@
 <h2> <span class="capitalize">{{vm.order.customer_name}}</span> 's order of the {{vm.vendor.name}}'s {{vm.product.name}} </h2>
 <h3 class="capitalize">Customer Name: {{vm.order.customer_name}}</h3>
 <h3>Phone: {{vm.order.contact_num}}</h3>
-<h3>Pick Up Time: {{vm.order.pick_up_time}}</h3>
+<h3>Pick Up Time: {{vm.order.pick_up_time | date:'medium'}}</h3>
 <h3>Reserve Amount: {{vm.order.reserve_amount}}</h3>
-<h3>Created: {{vm.order.created_at}}</h3>
-<h3>Updated: {{vm.order.updated_at}}</h3>
+<h3>Created: {{vm.order.created_at | date:'medium'}}</h3>
 <hr>
 <div class="well">
 <button class="edit_order" ng-click="editO = !editO">Edit This order</button>

@@ -44,10 +44,9 @@
     <div>
         <h3 class="capitalize">Customer Name: <a data-ui-sref="orderShow({vendor_id: vm.vendor.id, product_id: vm.product.id, order_id: order.id})">{{order.customer_name}} </a></h3>
         <h3>Phone: {{order.contact_num}}</h3>
-        <h3>Pick Up Time: {{order.pick_up_time}}</h3>
+        <h3>Pick Up Time: {{order.pick_up_time | date:'medium'}}</h3>
         <h3>Reserve Amount: {{order.reserve_amount}}</h3>
-        <h3>Created: {{order.created_at}}</h3>
-        <h3>Updated: {{order.updated_at}}</h3>
+        <h3>Created: {{order.created_at | date:'medium'}}</h3>
 
     </div>
     <hr>
