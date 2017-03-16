@@ -1,6 +1,9 @@
+<div class="container">
 <a data-ui-sref="vendorIndex"><button> Vendor List </button></a>
 
 <h2>Orders for {{vm.product.name}} of {{vm.vendor.name}}</h2>
+<div class="well">
+
 <button class="edit_product" ng-click="editP = !editP">Edit This Product</button>
   <div class="edit_form">
     <form class="editing" ng-show="editP" ng-submit="vm.update(vm.product)">
@@ -34,8 +37,7 @@
           <button type="submit">Produce</button>
       </form>
     </div>
-
-
+  </div>
 
   <div data-ng-repeat="order in vm.orders">
 
@@ -50,3 +52,5 @@
     </div>
     <hr>
   </div>
+
+</div>
