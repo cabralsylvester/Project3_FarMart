@@ -99,7 +99,9 @@ a {
 .capitalize {
   text-transform: capitalize;
 }
-
+ input {
+   color: black !important;
+ }
 /*@media screen and (max-width: 600px) {
     .fullscreen-bg {
       display: none;
