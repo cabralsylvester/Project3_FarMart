@@ -1,66 +1,71 @@
 <div class="container">
-<div class="well"> <a data-ui-sref="vendorIndex"><button>Vendors List </button></a> </div>
+  <div class="well">
+    <a data-ui-sref="vendorIndex">
+      <!-- Might just have this be a link and style it with a special class -->
+      <button>Vendors List </button>
+    </a>
+  </div>
 
-<article>
-  <h2> {{vm.vendor.name}} </h2>
-  <p> {{vm.vendor.city}} , {{vm.vendor.state}} </p>
-  <p> Website: {{vm.vendor.website}} </p>
-  <p class="vendor"> <img ng-src={{vm.vendor.image}}> </p>
-</article>
+  <article>
+    <h2> {{vm.vendor.name}} </h2>
+    <p> {{vm.vendor.city}} , {{vm.vendor.state}} </p>
+    <p> Website: {{vm.vendor.website}} </p>
+    <p class="vendor"> <img ng-src={{vm.vendor.image}}> </p>
+  </article>
 
 
-<div class="well">
-<button class="edit_vendor" ng-click="edit = !edit">Edit This Vendor</button>
-  <div class="edit_form">
-    <form class="editing" ng-show="edit" ng-submit="vm.update(vm.vendor)">
-      <input placeholder="Name" ng-model="vm.vendor.name">
-      <input placeholder="City" ng-model="vm.vendor.city">
-      <input placeholder="State" ng-model="vm.vendor.state">
-      <input placeholder="Website Link" ng-model="vm.vendor.website">
-      <input placeholder="Image" ng-model="vm.vendor.image">
+  <div class="well">
+    <button class="edit_vendor" ng-click="edit = !edit">Edit This Vendor</button>
+    <div class="edit_form">
+      <form class="editing" ng-show="edit" ng-submit="vm.update(vm.vendor)">
+        <input placeholder="Name" ng-model="vm.vendor.name">
+        <input placeholder="City" ng-model="vm.vendor.city">
+        <input placeholder="State" ng-model="vm.vendor.state">
+        <input placeholder="Website Link" ng-model="vm.vendor.website">
+        <input placeholder="Image" ng-model="vm.vendor.image">
         <button type="submit" ng-click="edit = !edit">Update</button>
-    </form>
-    <button type="button" ng-click="vm.remove()">Delete</button>
+      </form>
+      <button type="button" ng-click="vm.remove()">Delete</button>
+    </div>
   </div>
-</div>
 
 
-<h2>Products of {{vm.vendor.name}} </h2>
+  <h2>Products of {{vm.vendor.name}} </h2>
 
-<div class="well">
-<button class="add_product" ng-click="createP = !createP">Add a Product</button>
-  <div class="new_form">
-    <form class="adding" ng-show="createP" ng-submit="vm.create(newProduct)">
-      <select ng-model="vm.newProduct.category">
-        <option value="" disabled selected>Select a Category</option>
-        <option value="Meat">Meat</option>
-        <option value="Poultry">Poultry</option>
-        <option value="Fish">Fish</option>
-        <option value="Dairy">Dairy</option>
-        <option value="Fruits">Fruit</option>
-        <option value="Breads">Bread</option>
-        <option value="Grains">Grains</option>
-        <option value="Vegetables">Vegetables</option>
-        <option value="Other">Other</option>
-      </select>
-      <input placeholder="Product Name" ng-model="vm.newProduct.name">
-      <input type='number' placeholder="Amount" ng-model="vm.newProduct.amount">
-      <input placeholder="Unit of Measurement" ng-model="vm.newProduct.unit_of_measure">
-      <input placeholder="Image" ng-model="vm.newProduct.image">
-      <input placeholder="description" ng-model="vm.newProduct.description">
+  <div class="well">
+    <button class="add_product" ng-click="createP = !createP">Add a Product</button>
+    <div class="new_form">
+      <form class="adding" ng-show="createP" ng-submit="vm.create(newProduct)">
+        <select ng-model="vm.newProduct.category">
+          <option value="" disabled selected>Select a Category</option>
+          <option value="Meat">Meat</option>
+          <option value="Poultry">Poultry</option>
+          <option value="Fish">Fish</option>
+          <option value="Dairy">Dairy</option>
+          <option value="Fruits">Fruit</option>
+          <option value="Breads">Bread</option>
+          <option value="Grains">Grains</option>
+          <option value="Vegetables">Vegetables</option>
+          <option value="Other">Other</option>
+        </select>
+        <input placeholder="Product Name" ng-model="vm.newProduct.name">
+        <input type='number' placeholder="Amount" ng-model="vm.newProduct.amount">
+        <input placeholder="Unit of Measurement" ng-model="vm.newProduct.unit_of_measure">
+        <input placeholder="Image" ng-model="vm.newProduct.image">
+        <input placeholder="description" ng-model="vm.newProduct.description">
         <button type="submit">Produce</button>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 
-<div class="product-container">
+  <div class="product-container">
     <div class ="vendor-product" data-ng-repeat="product in vm.products">
-    <h3>Name: <a data-ui-sref="productShow({vendor_id: vm.vendor.id, product_id: product.id})">{{product.name}} </a></h3>
-    <h4>Category: {{product.category}}</h4>
-    <h4>Amount: {{product.amount}} {{product.unit_of_measure}}</h4>
-     <h4> <a href="" ng-click="showDetails = ! showDetails">Description</a></h4><div class="product-details" ng-show="showDetails"> <p>{{product.description}}</p> </div>
-    <img ng-src="{{product.image}}">
+      <h3>Name: <a data-ui-sref="productShow({vendor_id: vm.vendor.id, product_id: product.id})">{{product.name}} </a></h3>
+      <h4>Category: {{product.category}}</h4>
+      <h4>Amount: {{product.amount}} {{product.unit_of_measure}}</h4>
+      <h4> <a href="" ng-click="showDetails = ! showDetails">Description</a></h4><div class="product-details" ng-show="showDetails"> <p>{{product.description}}</p> </div>
+      <img ng-src="{{product.image}}">
+    </div>
   </div>
-</div>
-<hr>
+  <!-- avoid hr use border-bottom instead -->
 </div>
