@@ -1,50 +1,46 @@
-
-let vendor = [
-  {name: "Cest la Pommes", city: "Bayville", state: "VA", website: "http://www.apple.com/" , image: "http://cdn.rosannadavisonnutrition.com/wp-content/uploads/2015/12/apples.jpeg"  },
-  {name: "Cest la Apples", city: "Bayville", state: "VA", website: "http://www.apple.com/" , image: "http://cdn.rosannadavisonnutrition.com/wp-content/uploads/2015/12/apples.jpeg"  }
-]
+// Well done! Some formatting suggestions and other comments below
 
 angular
-  .module("farmart", [
-    "ui.router",
-    "ngResource"
-  ])
-  .config([
+.module("farmart", [
+  "ui.router",
+  "ngResource"
+])
+.config([
   "$stateProvider",
   RouterFunction
-  ])
-  .factory("FarmartFactory", [
-    "$resource",
-    FarmartFactoryFunction
-  ])
-  .controller("VendorIndexController", [
-    "FarmartFactory",
-    "$state",
-    VendorIndexControllerFunction
-  ])
-  .controller("VendorNewController", [
-    "FarmartFactory",
-    "$state",
-    VendorNewControllerFunction
-  ])
-  .controller("VendorShowController", [
-    "FarmartFactory",
-    "$stateParams",
-    "$state",
-    VendorShowControllerFunction
-  ])
-  .controller("ProductShowController", [
-     "FarmartFactory",
-     "$stateParams",
-     "$state",
-     ProductShowControllerFunction
-   ])
-  .controller("OrderShowController", [
-    "FarmartFactory",
-    "$stateParams",
-    "$state",
-    OrderShowControllerFunction
-  ])
+])
+.factory("FarmartFactory", [
+  "$resource",
+  FarmartFactoryFunction
+])
+.controller("VendorIndexController", [
+  "FarmartFactory",
+  "$state",
+  VendorIndexControllerFunction
+])
+.controller("VendorNewController", [
+  "FarmartFactory",
+  "$state",
+  VendorNewControllerFunction
+])
+.controller("VendorShowController", [
+  "FarmartFactory",
+  "$stateParams",
+  "$state",
+  VendorShowControllerFunction
+])
+.controller("ProductShowController", [
+  "FarmartFactory",
+  "$stateParams",
+  "$state",
+  ProductShowControllerFunction
+])
+.controller("OrderShowController", [
+  "FarmartFactory",
+  "$stateParams",
+  "$state",
+  OrderShowControllerFunction
+])
 
 
 function RouterFunction($stateProvider) {
@@ -81,22 +77,68 @@ function RouterFunction($stateProvider) {
   })
 }
 
+
+// Really nice encapsulation in this factory
+
+// I see your formatting headaches here. part of this might be mitigated by creating a utility function that constructs the configuration objects you are passing into $resource to DRY up the factory.
 function FarmartFactoryFunction($resource, $stateParams){
+  let vendorsURI = "https://farmart-api.herokuapp.com/vendors/:id.json"
+  let productsURI = "https://farmart-api.herokuapp.com/vendors/:vendor_id/products/:product_id.json"
   return {
-    vendors: $resource( "https://farmart-api.herokuapp.com/vendors/:id.json", {id: "@id"}, {
-      query: {method: "GET", params: {}, isArray: true },
-      create: {method: "POST"},
-      get: {method: "GET", params: {id: "@id"}, isArray: false},
-      update: {method: "PUT", params: {id: "@id"}, isArray: false},
-      remove: {method: "DELETE", params: {id: "@id"}}
+    vendors: $resource( vendorsURI, {id: "@id"}, {
+      query: {
+        method: "GET",
+        params: {},
+        isArray: true },
+      create: { method: "POST" },
+      get: {method: "GET",
+        params: {id: "@id"},
+        isArray: false
+      },
+      update: {
+        method: "PUT",
+        params: { id: "@id" },
+        isArray: false},
+      remove: {method: "DELETE",
+        params: {id: "@id"}}
+      }),
+
+    products: $resource(
+      productsURI,
+      {
+        vendor_id:"@vendor_id",
+        product_id: "@product_id"
+      },
+      {
+        query: {method: "GET", params: {}, isArray: true},
+        get: {
+          method: "GET",
+          params: {
+            vendor_id: "@vendor_id",
+            product_id: "@product_id"
+          },
+          isArray: false
+        },
+        create: {
+          method: "POST",
+          params: {vendor_id: "@vendor_id"}
+        },
+        remove: {
+          method: "DELETE",
+          params: {
+            vendor_id: "@vendor_id",
+            product_id: "@product_id"
+          }
+        },
+        update: {
+          method: "PUT",
+          params: {
+            vendor_id: "@vendor_id",
+            product_id: "@product_id"
+          }
+        }
     }),
-    products: $resource( "https://farmart-api.herokuapp.com/vendors/:vendor_id/products/:product_id.json", {vendor_id:"@vendor_id", product_id: "@product_id"}, {
-      query: {method: "GET", params: {}, isArray: true},
-      get: {method: "GET", params: {vendor_id: "@vendor_id", product_id: "@product_id"}, isArray: false},
-      create: {method: "POST", params: {vendor_id: "@vendor_id"}},
-      remove: {method: "DELETE", params: {vendor_id: "@vendor_id", product_id: "@product_id"}},
-      update: {method: "PUT", params: {vendor_id: "@vendor_id", product_id: "@product_id"}}
-    }),
+
     orders: $resource("https://farmart-api.herokuapp.com/vendors/:vendor_id/products/:product_id/orders/:order_id.json", {vendor_id: "@vendor_id", product_id: "@product_id", order_id: "@order_id"}, {
       query: {method: "GET", params: {vendor_id: "@vendor_id", product_id: "@product_id"}, isArray: true},
       get: {method: "GET", params: {vendor_id: "@vendor_id", product_id: "@product_id", order_id: "@order_id"}, isArray: false},
@@ -107,15 +149,16 @@ function FarmartFactoryFunction($resource, $stateParams){
   }
 }
 
+// not using $state here
 function VendorIndexControllerFunction(FarmartFactory, $state) {
   this.vendors = FarmartFactory.vendors.query();
 }
 
- // create new vendor
+// create new vendor
 function VendorNewControllerFunction(FarmartFactory, $state) {
   this.vendor = new FarmartFactory.vendors()
   this.create = function() {
-      this.vendor.$save(function(vendor){
+    this.vendor.$save(function(vendor){
       $state.go("vendorShow", {id: vendor.id})
     })
   }
@@ -127,26 +170,26 @@ function VendorShowControllerFunction(FarmartFactory, $stateParams, $state) {
   this.products = FarmartFactory.products.query({vendor_id: $stateParams.id});
 
   //edit vendor functionality
- this.update = function(vendor){
-   this.vendor.$update({id: $stateParams.id}, function(vendor) {
-     $state.go($state.current, {}, {reload: true})
-   })
- }
+  this.update = function(vendor){
+    this.vendor.$update({id: $stateParams.id}, function(vendor) {
+      $state.go($state.current, {}, {reload: true})
+    })
+  }
 
- // delete vendor functionality
-   this.remove = function(){
-     this.vendor.$remove({id: $stateParams.id}, function(){
-       $state.go("vendorIndex")
-     })
-   }
+  // delete vendor functionality
+  this.remove = function(){
+    this.vendor.$remove({id: $stateParams.id}, function(){
+      $state.go("vendorIndex")
+    })
+  }
 
-// add product functionality
+  // add product functionality
   this.newProduct = new FarmartFactory.products
-   this.create = function() {
-     this.newProduct.$save({vendor_id: $stateParams.id}, function(){
-       $state.reload()
-     })
-   }
+  this.create = function() {
+    this.newProduct.$save({vendor_id: $stateParams.id}, function(){
+      $state.reload()
+    })
+  }
 }
 
 
@@ -158,49 +201,49 @@ function ProductShowControllerFunction(FarmartFactory, $stateParams, $state) {
 
 
   // delete product functionality
-    this.remove = function(vendor, product){
-      this.product.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id},
-        (vendor) => {
-          $state.go("vendorShow", {id: $stateParams.vendor_id})
-        })
+  this.remove = function(vendor, product){
+    this.product.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id},
+      (vendor) => {
+        $state.go("vendorShow", {id: $stateParams.vendor_id})
+      })
     }
 
-  // edit product functionality // redirect still not working
+    // edit product functionality // redirect still not working
     this.update = function(vendor, product){
       this.product.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id}, {},
         () => {
-        $state.go("vendorShow", {id: $stateParams.vendor_id})
-      })
-     }
+          $state.go("vendorShow", {id: $stateParams.vendor_id})
+        })
+      }
 
 
-  // add order functionality
-    this.newOrder = new FarmartFactory.orders
-    this.create = function() {
-      this.newOrder.$save({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id},
-      () => {
-      $state.reload()
-    })
-  }
-}
+      // add order functionality
+      this.newOrder = new FarmartFactory.orders
+      this.create = function() {
+        this.newOrder.$save({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id},
+          () => {
+            $state.reload()
+          })
+        }
+      }
 
 
-function OrderShowControllerFunction(FarmartFactory, $stateParams, $state) {
-  this.vendor = FarmartFactory.vendors.get({id: $stateParams.vendor_id})
-  this.product = FarmartFactory.products.get({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id})
-  this.order = FarmartFactory.orders.get({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id})
+      function OrderShowControllerFunction(FarmartFactory, $stateParams, $state) {
+        this.vendor = FarmartFactory.vendors.get({id: $stateParams.vendor_id})
+        this.product = FarmartFactory.products.get({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id})
+        this.order = FarmartFactory.orders.get({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id})
 
-  // edit order functionality
-    this.update = function(vendor, product, order) {
-      this.order.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}, () => {
-        $state.reload()
-      })
-    }
+        // edit order functionality
+        this.update = function(vendor, product, order) {
+          this.order.$update({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}, () => {
+            $state.reload()
+          })
+        }
 
-  // delete order functionality
-    this.remove = function(vendor, product, order){
-      this.order.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}, (vendor, product) => {
-      $state.go("productShow", {vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id})
-    })
-  }
-}
+        // delete order functionality
+        this.remove = function(vendor, product, order){
+          this.order.$remove({vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id, order_id: $stateParams.order_id}, (vendor, product) => {
+            $state.go("productShow", {vendor_id: $stateParams.vendor_id, product_id: $stateParams.product_id})
+          })
+        }
+      }
